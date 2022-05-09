@@ -17,7 +17,7 @@ const initialState:UserState = { loading: false, error:false }
 export default createReducer(
     initialState,
     
-    on(loginRequest, (state) => ({ ...state, loading: true })),
+    on(loginRequest, (state) => ({ ...state, loading: true, error:false })),
 
     on(loginFailed, (state) => ({...state, loading:false, error:true})),
 

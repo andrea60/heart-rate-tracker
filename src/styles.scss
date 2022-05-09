@@ -2,3 +2,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
+
+body,html {
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0;
+    overflow-y:scroll;
+}
+body {
+    background: rgb(34,34,44);
+    background: linear-gradient(45deg, rgba(34,34,44,1) 0%, rgba(56,56,71,1) 100%);
+    font-family:'Inter', 'sans-serif';
+    color:#eee;
+    font-size:.9rem;
+    font-weight:200;
+}
+
+input, select {
+    @apply w-full;
+}
+input, select {
+    @apply bg-main-800 px-2 py-1 font-thin rounded-md border-2 border-main-800;
+    
+    &:hover:not(:disabled) {
+        @apply outline-none border-2 shadow-even-sm shadow-primary;
+        
+    }
+    &:disabled {
+       @apply opacity-80;
+    }
+    // invalid states
+    &.ng-touched.ng-invalid {
+        @apply shadow-even-sm shadow-red-600;
+        &::placeholder {
+            @apply text-red-700;
+        }
+    }
+
+}
+
+button.btn {
+    @apply py-2 px-4 rounded-lg bg-main-100 drop-shadow-lg  transition ease-in-out;
+
+    &:hover:not(:disabled), &:active:not(:disabled) {
+        @apply drop-shadow-none bg-main-200;
+    }
+
+    &:disabled {
+        @apply drop-shadow-none text-gray-300 opacity-75;
+    }
+
+    // PRIMARY variant
+    &.btn-primary {
+        @apply bg-gradient-to-r from-primary to-primary-dark;
+
+        &:hover:not(:disabled), &:active:not(:disabled) {
+            @apply from-primary-dark to-primary;
+        }
+    }
+    // DANGER variant
+    &.btn-danger {
+        @apply bg-gradient-to-r from-red-500 to-red-600;
+
+        &:hover:not(:disabled), &:active:not(:disabled) {
+            @apply from-red-600 to-red-500
+        }
+    }
+}
+
+.form-group {
+    label {
+        @apply block mb-1;
+    }
+}
+
+.card {
+    @apply p-3 bg-main rounded-md;
+}

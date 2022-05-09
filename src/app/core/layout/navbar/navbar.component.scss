@@ -1,0 +1,11 @@
+.nav-link {
+        @apply flex-1 text-center border-r-1 border-main-600 text-lg;
+
+    &:last-child {
+        @apply border-r-0;
+    }
+
+    &.active {
+        @apply text-primary;
+    }
+}
