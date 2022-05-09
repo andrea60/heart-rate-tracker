@@ -1,5 +1,5 @@
 import * as UserActions from './user/user.actions';
 
-export default {
+export {
     UserActions
 }

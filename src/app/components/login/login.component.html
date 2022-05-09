@@ -1,0 +1,12 @@
+<div>
+    <form [formGroup]="form" (submit)="login()">
+        <input type="text" formControlName="email" />
+        <br/>
+        <input type="password" formControlName="password" />
+
+        <button type="submit" [disabled]="loading$ | async">Login</button>
+        <p *ngIf="error$ | async">
+            Authentication error
+        </p>
+    </form>
+</div>

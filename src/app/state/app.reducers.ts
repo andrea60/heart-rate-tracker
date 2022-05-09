@@ -1,5 +1,5 @@
-import * as UserReducers from './user/user.reducers';
+import UserReducers from './user/user.reducers';
 
-export default {
+export {
     UserReducers
 }
