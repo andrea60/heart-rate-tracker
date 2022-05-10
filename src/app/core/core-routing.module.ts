@@ -12,7 +12,6 @@ const routes:Route[] = [
         canActivate:[AuthGuardService],
         children:[
             { path:'live', loadChildren:() => import('../live/live.module').then(m => m.LiveModule)},
-            { path:'**', redirectTo:'/live'}
         ]
     },
     {
@@ -21,7 +20,10 @@ const routes:Route[] = [
         children:[
             { path:'login', component: LoginPageComponent }
         ]
-    }
+    },
+    { path:'', pathMatch:'full', redirectTo:'/live'},
+    { path:'**', redirectTo:'/live' }
+    
 ]
 @NgModule({
     imports: [RouterModule.forChild(routes)],

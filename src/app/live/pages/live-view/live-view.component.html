@@ -1,0 +1,11 @@
+<button class="btn w-full mb-3" (click)="start()">Start Session</button>
+<p *ngIf="(sessionStatus$ | async) === 'running'">
+    {{(hr$ | async) | json}}
+</p>
+<p>
+    {{sessionStatus$ | async}}
+</p>
+<p>
+    Device Info
+    {{deviceInfo$ | async | json}}
+</p>

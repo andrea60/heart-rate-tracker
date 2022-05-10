@@ -4,13 +4,17 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import * as AppReducers from './state/app.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffect } from './state/user/user.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import userReducers from './state/user/user.reducers';
+import userParamsReducers from './state/user-params/user-params.reducers';
+import activitySessionReducers from './state/activity-session/activity-session.reducers';
+import { ActivitySessionEffects } from './state/activity-session/activity-session.effects';
+import bluetoothConfigReducers from './state/bluetooth/bluetooth-config.reducers';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot({
-      user: AppReducers.UserReducers
+      user: userReducers,
+      'user-params': userParamsReducers,
+      'activity-session': activitySessionReducers,
+      bluetooth: bluetoothConfigReducers
     }),
-    EffectsModule.forRoot([UserEffect]),
+    EffectsModule.forRoot([UserEffect, ActivitySessionEffects]),
     StoreDevtoolsModule.instrument({}),
     FontAwesomeModule,
   ],

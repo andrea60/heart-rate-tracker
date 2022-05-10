@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs';
+import { filter, mapTo, take } from 'rxjs';
 import { UserActions } from 'src/app/state/app.actions';
 import { UserSelectors } from 'src/app/state/app.selectors';
 import { UserState } from 'src/app/state/user/user.reducers';
@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
 
   loading$ = this.store.select(UserSelectors.isLoading);
   error$ = this.store.select(UserSelectors.hasError);
-  success$ = this.store.select(UserSelectors.getCurrentUser);
+  success$ = this.store.select(UserSelectors.getCurrentUser).pipe(filter(usr => !!usr), mapTo(true));
 
   constructor(private store:Store<UserState>, private router:Router) { }
 
