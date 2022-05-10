@@ -2,11 +2,11 @@
     <form [formGroup]="loginForm" (click)="login()">
         <div class="form-group mb-2">
             <label>Email</label>
-            <input type="email" formControlName="email">
+            <input type="email" formControlName="email" placeholder="Email">
         </div>
         <div class="form-group mb-2">
             <label>Password</label>
-            <input type="password" formControlName="password">
+            <input type="password" formControlName="password" placeholder="Password">
         </div>
         <button class="btn w-full" type="submit" [disabled]="loginForm.invalid || (loading$ | async)">
             <fa-icon icon="circle-notch" [spin]="true" *ngIf="loading$ | async"></fa-icon>

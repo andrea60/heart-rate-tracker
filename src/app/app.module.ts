@@ -15,6 +15,8 @@ import userParamsReducers from './state/user-params/user-params.reducers';
 import activitySessionReducers from './state/activity-session/activity-session.reducers';
 import { ActivitySessionEffects } from './state/activity-session/activity-session.effects';
 import bluetoothConfigReducers from './state/bluetooth/bluetooth-config.reducers';
+import { DeviceEffect } from './state/device/device.effect';
+import deviceReducers from './state/device/device.reducers';
 
 @NgModule({
   declarations: [
@@ -29,9 +31,10 @@ import bluetoothConfigReducers from './state/bluetooth/bluetooth-config.reducers
       user: userReducers,
       'user-params': userParamsReducers,
       'activity-session': activitySessionReducers,
-      bluetooth: bluetoothConfigReducers
+      bluetooth: bluetoothConfigReducers,
+      device: deviceReducers
     }),
-    EffectsModule.forRoot([UserEffect, ActivitySessionEffects]),
+    EffectsModule.forRoot([UserEffect, ActivitySessionEffects, DeviceEffect]),
     StoreDevtoolsModule.instrument({}),
     FontAwesomeModule,
   ],

@@ -21,7 +21,7 @@ export class LiveViewComponent implements OnInit {
   }
 
   start(){
-    this.store.dispatch(ActivitySessionActions.startSession());
+    this.store.dispatch(ActivitySessionActions.prepareSession());
   }
 
   stop(){
