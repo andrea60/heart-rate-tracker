@@ -11,14 +11,11 @@ import { BluetoothConfigSelectors, DeviceSelectors } from "../app.selectors";
 @Injectable()
 export class DeviceEffect {
   
-
-    deviceId$ = defer(() => this.deviceId ? of(this.deviceId) : this.store.select(BluetoothConfigSelectors.getDeviceId));
-
     // connection request
     connect$ = createEffect(() =>
         this.actions$.pipe(
             ofType(DeviceActions.connect),
-            switchMap(() => this.deviceId$.pipe(take(1))),
+            switchMap(() => this.store.select(BluetoothConfigSelectors.getDeviceId)),
             switchMap(id => defer(() => this.bt.connectAsync(id))),
             map(({ success, error, deviceId }) => success && deviceId ? DeviceActions.connected({ deviceId }) : DeviceActions.connectionError({ error: error! }))
         )
