@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ActivitySessionEffects } from 'src/app/state/activity-session/activity-session.effects';
 import { ActivitySessionState } from 'src/app/state/activity-session/activity-session.reducers';
 import { ActivitySessionActions } from 'src/app/state/app.actions';
-import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
+import { ActivitySessionSelectors, DeviceSelectors } from 'src/app/state/app.selectors';
 
 @Component({
   selector: 'hrt-live-view',
@@ -12,7 +12,8 @@ import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
 export class LiveViewComponent implements OnInit {
 
   sessionStatus$ = this.store.select(ActivitySessionSelectors.getStatus);
-  deviceInfo$ = this.store.select(ActivitySessionSelectors.getDeviceInfo);
+  deviceInfo$ = this.store.select(DeviceSelectors.currentDev);
+  deviceStatus$ = this.store.select(DeviceSelectors.getStatus);
   hr$ = this.store.select(ActivitySessionSelectors.getCurrentHR);
 
   constructor(public store:Store<ActivitySessionState>) { }

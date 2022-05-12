@@ -1,16 +1,20 @@
 import { createReducer, on } from "@ngrx/store";
-import { connect, connected, connectionError, disconnect, disconnected } from "./device.actions";
+import produce from "immer";
+import { connect, connected, connectionError, dataReceived, disconnect, disconnected } from "./device.actions";
 
+export type DeviceStatus = 'disconnected' | 'connecting' | 'connected';
 export interface DeviceState {
-    currentDeviceId: string | null;
-    connected: boolean;
+    currentDevId: string | null;
+    currentDevName: string | null;
+    status: DeviceStatus;
     shouldBeConnected: boolean;
     error: string | null;
 }
 
 const initialState:DeviceState = {
-    currentDeviceId: null,
-    connected: false,
+    currentDevId: null,
+    currentDevName: null,
+    status: 'disconnected',
     error: null,
     shouldBeConnected: false
 }
@@ -19,11 +23,20 @@ const initialState:DeviceState = {
 export default createReducer(
     initialState,
 
-    on(connected, (state, {deviceId}) => ({...state, error:null, connected:true, shouldBeConnected: true, currentDeviceId: deviceId })),
+    on(connect, (state) => ({ ...state, status:'connecting' })),
+    on(connected, (state, {deviceId, name}) => ({ 
+        ...state, 
+        error:null, 
+        shouldBeConnected: true, 
+        currentDevId: deviceId,
+        currentDevName: name || null,
+        status:'connected'
+    })),
 
     on(disconnect, (state) => ({...state, shouldBeConnected: false })),
 
-    on(disconnected, (state) => ({...state, connected:false, currentDeviceId: null, error:null})),
+    on(disconnected, (state) => ({...state, status:'disconnected', currentDeviceId: null, error:null})),
 
-    on(connectionError, (state, { error }) => ({...state, error, connected: false }))
+    on(connectionError, (state, { error }) => ({...state, error, status:'disconnected' })),
+
 )

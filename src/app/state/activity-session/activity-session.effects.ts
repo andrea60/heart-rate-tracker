@@ -33,18 +33,11 @@ export class ActivitySessionEffects {
         this.actions$.pipe(
           ofType(DeviceActions.dataReceived),
           switchAdd(() => this.store.select(ActivitySessionSelectors.hasActiveSession)),
-          map(([{value}, b]) => )
-          
+          filter(([_, active]) => active === true),
+          map(([{value}]) => ActivitySessionActions.addHRData({ value, time:new Date() }))
         )
   )
-
-
-
   constructor(private store: Store, private actions$: Actions) {
 
   }
-
-
-
-
 }

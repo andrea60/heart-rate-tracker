@@ -70,7 +70,7 @@ export class BluetoothService {
 
       this.startRecording();
 
-      return { success: true, deviceId: device.deviceId };
+      return { success: true, devId: device.deviceId, devName: device.name  };
     } catch (error) {
       console.warn('BLE Device connection error: ', error);
       return { success: false, error: error + "" };
@@ -78,11 +78,9 @@ export class BluetoothService {
   }
   private onDeviceConnected(device: BleDevice) {
     this.deviceId = device.deviceId;
-    console.log('Device connected ', device);
   }
   private onDeviceDisconnected(device: BleDevice) {
     this.deviceId = null;
-    console.log('Device disconnected');
   }
   private onDataReceived(value: DataView) {
     this.ngZone.run(() => {

@@ -6,5 +6,4 @@ const activitySession = createFeatureSelector<ActivitySessionState>('activity-se
 export const getCurrentSession = createSelector(activitySession, state => state.currentSession);
 export const hasActiveSession = createSelector(activitySession, state => state.currentSession != null);
 export const getStatus = createSelector(activitySession, state => state.status);
-export const getDeviceInfo = createSelector(activitySession, ({ deviceError, deviceId }) => ({ deviceId, deviceError}));
 export const getCurrentHR = createSelector(activitySession, state => state.currentSession?.hr);

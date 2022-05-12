@@ -2,6 +2,9 @@
 <p *ngIf="(sessionStatus$ | async) === 'running'">
     {{(hr$ | async) | json}}
 </p>
+<p *ngIf="(sessionStatus$ | async) === 'preparing'">
+    Device Status: {{deviceStatus$ | async}}
+</p>
 <p>
     {{sessionStatus$ | async}}
 </p>

@@ -2,7 +2,8 @@ import { Injectable, NgZone } from "@angular/core";
 import { BleClient, BleDevice } from "@capacitor-community/bluetooth-le";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { defer, delay, filter, from, map, of, Subject, switchMap, take, tap } from "rxjs";
+import { defer, delay, filter, from, map, of, Subject, switchMap, take, tap, timeout } from "rxjs";
+import { switchAdd } from "src/app/lib/switch-add";
 import { BluetoothService } from "src/app/services/bluetooth.service";
 import { HRValue } from '../../models/hr-value.model';
 import { ActivitySessionActions, DeviceActions } from "../app.actions";
@@ -17,7 +18,19 @@ export class DeviceEffect {
             ofType(DeviceActions.connect),
             switchMap(() => this.store.select(BluetoothConfigSelectors.getDeviceId)),
             switchMap(id => defer(() => this.bt.connectAsync(id))),
-            map(({ success, error, deviceId }) => success && deviceId ? DeviceActions.connected({ deviceId }) : DeviceActions.connectionError({ error: error! }))
+            // map(v => [v]),
+            switchAdd(() => 
+                 // wait for at least one value before continuing
+                this.bt.values$.pipe(
+                    take(1), 
+                    timeout({
+                        each: 10000,
+                        with: () => of({ success:false,  error:'Value timeout'})
+                    }))),
+            map(([{ success, error, devId, devName }]) => 
+                success && devId ? 
+                    DeviceActions.connected({ deviceId: devId, name: devName }) : 
+                    DeviceActions.connectionError({ error: error! }))
         )
     );
 
