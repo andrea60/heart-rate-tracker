@@ -32,6 +32,7 @@
     "highcharts": "^10.1.0",
     "highcharts-angular": "^3.0.0",
     "immer": "^9.0.14",
+    "neo-observable-input": "^1.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "uuid": "^8.3.2",

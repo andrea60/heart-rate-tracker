@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { LiveViewComponent } from './pages/live-view/live-view.component';
 import { LiveRoutingModule } from './live-routing.module';
 import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -13,7 +15,9 @@ import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
   ],
   imports: [
     CommonModule,
-    LiveRoutingModule
+    LiveRoutingModule,
+    HighchartsChartModule,
+    SharedModule
   ]
 })
 export class LiveModule { }

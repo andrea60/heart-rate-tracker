@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { filter, map, switchMap } from 'rxjs';
+import { ActionCreator, Creator, Store } from '@ngrx/store';
+import { filter, map, switchMap, take } from 'rxjs';
 import { filterTrue, whenTrue } from 'src/app/lib/filter-true';
+import { joinState } from 'src/app/lib/join-state';
 import { switchAdd } from 'src/app/lib/switch-add';
 
 import { ActivitySessionActions, DeviceActions } from '../app.actions';
-import { ActivitySessionSelectors } from '../app.selectors';
+import { ActivitySessionSelectors, UserParamsSelectors } from '../app.selectors';
 
 @Injectable()
 export class ActivitySessionEffects {
@@ -23,8 +24,8 @@ export class ActivitySessionEffects {
   startSession$ = createEffect(() => 
       this.actions$.pipe(
         ofType(DeviceActions.connected),
-        switchMap(() => this.store.select(ActivitySessionSelectors.getStatus)),
-        filter(status => status == 'preparing'),
+        joinState(() => this.store.select(ActivitySessionSelectors.getStatus)),
+        filter(([_,status]) => status == 'preparing'),
         map(() => ActivitySessionActions.startSession()),
       )
   );
@@ -32,9 +33,10 @@ export class ActivitySessionEffects {
   logData$ = createEffect(() => 
         this.actions$.pipe(
           ofType(DeviceActions.dataReceived),
-          switchAdd(() => this.store.select(ActivitySessionSelectors.hasActiveSession)),
+          joinState(() => this.store.select(ActivitySessionSelectors.hasActiveSession)),
           filter(([_, active]) => active === true),
-          map(([{value}]) => ActivitySessionActions.addHRData({ value, time:new Date() }))
+          joinState(() => this.store.select(UserParamsSelectors.getAll)),
+          map(([[{ value }], userParams]) => ActivitySessionActions.addHRData({ value, time:new Date(), userParams }))
         )
   )
   constructor(private store: Store, private actions$: Actions) {

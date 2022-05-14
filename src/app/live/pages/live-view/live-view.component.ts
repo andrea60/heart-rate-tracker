@@ -11,10 +11,9 @@ import { ActivitySessionSelectors, DeviceSelectors } from 'src/app/state/app.sel
 })
 export class LiveViewComponent implements OnInit {
 
-  sessionStatus$ = this.store.select(ActivitySessionSelectors.getStatus);
-  deviceInfo$ = this.store.select(DeviceSelectors.currentDev);
-  deviceStatus$ = this.store.select(DeviceSelectors.getStatus);
+  sessionActive$ = this.store.select(ActivitySessionSelectors.hasActiveSession);
   hr$ = this.store.select(ActivitySessionSelectors.getCurrentHR);
+  zones$ = this.store.select(ActivitySessionSelectors.getZones);
 
   constructor(public store:Store<ActivitySessionState>) { }
 
