@@ -17,6 +17,9 @@ import { ActivitySessionEffects } from './state/activity-session/activity-sessio
 import bluetoothConfigReducers from './state/bluetooth/bluetooth-config.reducers';
 import { DeviceEffect } from './state/device/device.effect';
 import deviceReducers from './state/device/device.reducers';
+import { environment } from 'src/environments/environment';
+import { FakeBTDeviceService } from './services/bluetooth/fake-bt-device.service';
+import { BluetoothService } from './services/bluetooth/bluetooth.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import deviceReducers from './state/device/device.reducers';
     StoreDevtoolsModule.instrument({}),
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [
+    { provide: 'IBluetoothService', useClass: environment.fakeDevice ? FakeBTDeviceService : BluetoothService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
