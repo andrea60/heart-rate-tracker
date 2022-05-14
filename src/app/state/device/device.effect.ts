@@ -1,10 +1,11 @@
-import { Injectable, NgZone } from "@angular/core";
+import { Inject, Injectable, NgZone } from "@angular/core";
 import { BleClient, BleDevice } from "@capacitor-community/bluetooth-le";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { defer, delay, filter, from, map, of, Subject, switchMap, take, tap, timeout } from "rxjs";
 import { switchAdd } from "src/app/lib/switch-add";
-import { BluetoothService } from "src/app/services/bluetooth.service";
+import { BluetoothService } from "src/app/services/bluetooth/bluetooth.service";
+import { IBluetoothService } from "src/app/services/bluetooth/ibluetooth-service";
 import { HRValue } from '../../models/hr-value.model';
 import { ActivitySessionActions, DeviceActions } from "../app.actions";
 import { BluetoothConfigSelectors, DeviceSelectors } from "../app.selectors";
@@ -21,7 +22,7 @@ export class DeviceEffect {
             // map(v => [v]),
             switchAdd(() => 
                  // wait for at least one value before continuing
-                this.bt.values$.pipe(
+                this.bt.getValueStream().pipe(
                     take(1), 
                     timeout({
                         each: 10000,
@@ -39,7 +40,7 @@ export class DeviceEffect {
         this.actions$.pipe(
             ofType(DeviceActions.connected),
             switchMap(() =>
-                this.bt.values$.pipe(
+                this.bt.getValueStream().pipe(
                     map(value => DeviceActions.dataReceived({ value }))
                 )
             )
@@ -50,7 +51,7 @@ export class DeviceEffect {
     disconnect$ = createEffect(() => 
         this.actions$.pipe(
             ofType(DeviceActions.disconnect),
-            tap(() => this.bt.disconnect()), // detach from BLE
+            switchMap(() => this.bt.disconnectAsync()), // detach from BLE
             map(() => DeviceActions.disconnected())
         )
     )
@@ -82,7 +83,7 @@ export class DeviceEffect {
     constructor(
         private actions$: Actions,
         private store: Store,
-        private bt:BluetoothService
+        @Inject('IBluetoothService') private bt:IBluetoothService
     ) { }
 
     

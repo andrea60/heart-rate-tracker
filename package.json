@@ -29,6 +29,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@ngrx/effects": "^13.2.0",
     "@ngrx/store": "^13.2.0",
+    "highcharts": "^10.1.0",
+    "highcharts-angular": "^3.0.0",
     "immer": "^9.0.14",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
