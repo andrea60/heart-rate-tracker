@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, ActionReducerMap, MetaReducer, StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,9 +17,32 @@ import { ActivitySessionEffects } from './state/activity-session/activity-sessio
 import bluetoothConfigReducers from './state/bluetooth/bluetooth-config.reducers';
 import { DeviceEffect } from './state/device/device.effect';
 import deviceReducers from './state/device/device.reducers';
+import archiveReducers from './state/archive/archive.reducers';
 import { environment } from 'src/environments/environment';
 import { FakeBTDeviceService } from './services/bluetooth/fake-bt-device.service';
 import { BluetoothService } from './services/bluetooth/bluetooth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppState } from './state/app.state';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+
+const reducers: ActionReducerMap<AppState> = {
+  user: userReducers,
+  userParams: userParamsReducers,
+  activitySession: activitySessionReducers,
+  bluetooth: bluetoothConfigReducers,
+  device: deviceReducers,
+  archive: archiveReducers
+};
+
+
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+  // register here which sub-states must be persistant
+  return localStorageSync({keys: ['archive', 'bluetooth'], rehydrate: true })(reducer);
+}
+
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
+
 
 @NgModule({
   declarations: [
@@ -27,16 +50,11 @@ import { BluetoothService } from './services/bluetooth/bluetooth.service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({
-      user: userReducers,
-      'user-params': userParamsReducers,
-      'activity-session': activitySessionReducers,
-      bluetooth: bluetoothConfigReducers,
-      device: deviceReducers
-    }),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([UserEffect, ActivitySessionEffects, DeviceEffect]),
     StoreDevtoolsModule.instrument({}),
     FontAwesomeModule,

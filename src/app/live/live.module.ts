@@ -7,6 +7,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SharedModule } from '../shared/shared.module';
 import { ZonesBarComponent } from './comps/zones-bar/zones-bar.component';
 import { ZonesBarLabelComponent } from './comps/zones-bar-label/zones-bar-label.component';
+import { StartSessionComponent } from './pages/start-session/start-session.component';
 
 
 
@@ -15,7 +16,8 @@ import { ZonesBarLabelComponent } from './comps/zones-bar-label/zones-bar-label.
     LiveViewComponent,
     HrViewerComponent,
     ZonesBarComponent,
-    ZonesBarLabelComponent
+    ZonesBarLabelComponent,
+    StartSessionComponent
   ],
   imports: [
     CommonModule,

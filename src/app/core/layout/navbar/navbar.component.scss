@@ -1,7 +1,15 @@
 .nav-link {
-        @apply flex-1 text-center border-r-1 border-main-600 text-lg;
+    @apply flex-1 text-center border-r-1 border-main-600 text-lg;
+    transition:all ease-in-out .25s;
+    
+    &.hide {
+        flex:0;
+        width:0px !important;
+        overflow-x:hidden;
+        border:0;
+    }
 
-    &:last-child {
+    &.last {
         @apply border-r-0;
     }
 

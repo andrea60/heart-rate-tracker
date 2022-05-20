@@ -1,9 +1,14 @@
-<button class="btn w-full mb-3" (click)="start()" [disabled]="(sessionActive$ | async)">Start Session</button>
 <ng-container *ngIf="sessionActive$ | async">
+    <div *ngIf="paused$ | async" class="bg-orange-400 px-2 py-1 text-center mb-3 rounded-lg shadow-lg" @slideIn>
+        <fa-icon icon="pause"></fa-icon> Session is paused!
+    </div>
     <div class="flex justify-center">
         <div class="h-60">
             <hrt-hr-viewer [value]="hr$ | async" [zones]="zones$ | async"></hrt-hr-viewer>
         </div>
+    </div>
+    <div class="text-center">
+        <hrt-zone-badge [zone]="currentZone$ | async"></hrt-zone-badge>
     </div>
     <div class="flex justify-center">
         <div class="w-full">

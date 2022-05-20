@@ -6,11 +6,10 @@ import { CoreRoutingModule } from './core-routing.module';
 import { SkeletonExternalComponent } from './layout/skeleton-external/skeleton-external.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { SharedModule } from '../shared/shared.module';
-
 
 
 @NgModule({

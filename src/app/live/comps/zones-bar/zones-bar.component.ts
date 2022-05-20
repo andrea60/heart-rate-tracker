@@ -51,7 +51,7 @@ export class ZonesBarComponent implements OnInit, OnChanges {
       iterateObj(zones)
         .map(({key, value}) => ({
           i: key as HRZone,
-          color: environment.theme[key as HRZone],
+          color: environment.zonesConfig[key as HRZone].color,
           active: key <= current,
           fromBpm: value.bpmFrom
         }

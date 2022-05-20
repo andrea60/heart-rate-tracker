@@ -8,8 +8,11 @@ export class FakeBTDeviceService implements IBluetoothService {
         console.log('⚠️⚒️ Using fake BT device service ⚒️⚠️');
     }
     connectAsync(id?: string | null): Promise<BTConnectionResult> {
-        this.connected = true;
-        return Promise.resolve({ success: true, devId:'-1', devName:'Fake-BT-Device'});
+        
+        return new Promise(resolve => setTimeout(() => {
+            this.connected = true;
+            resolve({ success: true, devId:'-1', devName:'Fake-BT-Device'})
+        }, 1500));
     }
     disconnectAsync(): Promise<void> {
         this.connected = false;

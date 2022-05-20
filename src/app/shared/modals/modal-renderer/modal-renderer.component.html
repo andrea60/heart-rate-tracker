@@ -1,0 +1,11 @@
+<div>
+    <!-- BACKDROP -->
+    <div *ngIf="open" class="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50" @fade></div>
+
+    <!-- STRUCTURE -->
+    <div class="fixed left-0 top-0 w-full h-full flex items-center justify-center" *ngIf="open">
+        <div class="p-3 bg-main shadow-lg rounded-lg" @slide>
+            <ng-template hrtModalTarget></ng-template>
+        </div>
+    </div>
+</div>

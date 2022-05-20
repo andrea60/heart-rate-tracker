@@ -6,7 +6,7 @@ import { filterTrue, whenTrue } from 'src/app/lib/filter-true';
 import { joinState } from 'src/app/lib/join-state';
 import { switchAdd } from 'src/app/lib/switch-add';
 
-import { ActivitySessionActions, DeviceActions } from '../app.actions';
+import { ActivitySessionActions, ArchiveActions, DeviceActions } from '../app.actions';
 import { ActivitySessionSelectors, UserParamsSelectors } from '../app.selectors';
 
 @Injectable()
@@ -29,6 +29,16 @@ export class ActivitySessionEffects {
         map(() => ActivitySessionActions.startSession()),
       )
   );
+
+  stopSession$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(ActivitySessionActions.closeSession),
+      joinState(() => this.store.select(ActivitySessionSelectors.getCurrentSession)),
+      switchMap(([_, session]) => [
+        DeviceActions.disconnect(),
+        ArchiveActions.saveSession({ session: session! })
+      ])
+    ))
 
   logData$ = createEffect(() => 
         this.actions$.pipe(

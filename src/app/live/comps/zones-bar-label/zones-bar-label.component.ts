@@ -26,7 +26,7 @@ export class ZonesBarLabelComponent implements OnInit, OnChanges {
   flip = false;
 
   color$ = combineLatest([this.active$, this.zone$]).pipe(
-    map(([active, zone]) => active ? environment.theme[zone] : '')
+    map(([active, zone]) => active ? environment.zonesConfig[zone].color : '')
   )
 
   constructor() { }

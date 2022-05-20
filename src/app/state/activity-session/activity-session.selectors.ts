@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ActivitySessionState } from "./activity-session.reducers";
 
-const _= createFeatureSelector<ActivitySessionState>('activity-session');
+const _= createFeatureSelector<ActivitySessionState>('activitySession');
 
 export const getCurrentSession = createSelector(_, state => state.currentSession);
 export const hasActiveSession = createSelector(_, state => state.currentSession != null);

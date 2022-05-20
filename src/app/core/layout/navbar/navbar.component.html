@@ -1,6 +1,15 @@
 <div class="fixed bottom-0 left-0 w-full p-3">
-    <div class="flex bg-main-400 p-2 rounded-lg">
-        <a class="nav-link" *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active">
+    <div class="flex bg-main-400  p-2 rounded-lg" @rotateIn *ngIf="(show$ | async)">
+        <a *ngFor="let link of links$ | async as links; trackBy:trackLink;" 
+            class="nav-link" 
+            [class.hide]="!link.visible"
+            [class.last]="isLast(links, link)"
+            [style.color]="link.color"
+            [routerLink]="link.path" 
+            routerLinkActive="active"
+            (click)="triggerAction(link);"
+            >
+
             <fa-icon [icon]="link.icon"></fa-icon>
         </a>
     </div>

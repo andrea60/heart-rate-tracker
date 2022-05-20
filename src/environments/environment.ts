@@ -5,15 +5,41 @@
 export const environment = {
   production: false,
   fakeDevice: true,
-  theme: {
-    '0': '#00B4D8',
-    '1': '#69B34C',
-    '2': '#FF8E15', 
-    '3': '#FF4E11', 
-    '4': '#FF0D0D'
-  }
+  zonesConfig: {
+    '0': {
+      color:'#00B4D8',
+      percFrom: 50, 
+      percTo: 60,
+      label: 'Rest'
+    },
+    '1': {
+      color: '#69B34C',
+      percFrom: 60, 
+      percTo: 70,
+      label: 'Metabolism'
+    },
+    '2': {
+      color:'#FF8E15',
+      percFrom: 70,
+      percTo: 80,
+      label: 'Endurance'
+    }, 
+    '3': {
+      color: '#FF4E11',
+      percFrom: 80,
+      percTo: 90,
+      label: 'Power'
+    }, 
+    '4': {
+      color:'#FF0D0D',
+      percFrom: 90,
+      percTo: 100,
+      label: 'Max Power'
+    }
+  } as HRZonesConfig
 };
 
+import { HRZonesConfig } from 'src/app/models/hr-zones.config';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { getUUID } from "src/app/lib/get-uuid";
 import { ActivitySession } from "src/app/models/activity-session.model";
-import { addHRData, closeSession, pauseSession, prepareSession, startSession } from "./activity-session.actions";
+import { addHRData, closeSession, pauseSession, prepareSession, resumeSession, startSession } from "./activity-session.actions";
 import produce, { current } from "immer";
 import { generateHRZoneData, HRZone, HRZoneData } from "src/app/models/hr-zones.model";
 import { HRValue } from "src/app/models/hr-value.model";
@@ -34,6 +34,7 @@ export default createReducer(
     on(prepareSession, (state) => ({ ...state, status: 'preparing' })),
     on(startSession, (state) => ({...state, status:'running', currentSession: createDefaultSession() })),
     on(pauseSession, (state) => ({...state, status:'paused' })),
+    on(resumeSession, (state) => ({...state, status:'running'})),
     on(closeSession, (state) => {
         // check there is an open session now
         if (!state.currentSession)

@@ -3,11 +3,8 @@ module.exports = {
     "./src/**/*.{html,ts}"
   ],
   safelist:[
-    'shadow-zones-0',
-    'shadow-zones-1',
-    'shadow-zones-2',
-    'shadow-zones-3',
-    'shadow-zones-4',
+    'shadow-zones-0', 'shadow-zones-1', 'shadow-zones-2', 'shadow-zones-3', 'shadow-zones-4', 
+    'bg-zones-0', 'bg-zones-1', 'bg-zones-2', 'bg-zones-3', 'bg-zones-4'
   ],
   theme: {
     extend:{

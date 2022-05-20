@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export interface HRZoneData<T> {
     [key:number]: T;
     '0': T,
@@ -28,11 +30,5 @@ export function generateHRZoneData<T>(value:T | ((z:HRZone) => T)){
 
 /** Return default HRZone data in percentage */
 export function getDefaultHRZones(): HRZoneData<{ percFrom:number, percTo:number }>{
-    return {
-        '0': { percFrom: 50, percTo:59.9999 },
-        '1': { percFrom: 60, percTo: 69.9999 },
-        '2': { percFrom: 70, percTo: 79.9999 },
-        '3': { percFrom: 80, percTo: 89.9999 },
-        '4': { percFrom: 90, percTo: 100 }
-    }
+    return environment.zonesConfig;
 }

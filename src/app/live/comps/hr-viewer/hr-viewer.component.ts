@@ -53,7 +53,7 @@ export class HrViewerComponent implements OnInit {
     this.redraw();
   }
   chooseColor(z:HRZone){
-    return environment.theme[z];
+    return environment.zonesConfig[z].color;
   }
   redraw() {
     if (!this.zones)
