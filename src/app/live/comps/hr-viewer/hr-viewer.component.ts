@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { HRValue } from 'src/app/models/hr-value.model';
 import * as Highcharts from 'highcharts';
-import { HRZone, HRZoneData } from 'src/app/models/hr-zone-data.model';
-import { ObservableInputs } from 'neo-observable-input';
+import { HRZone, HRZoneData } from 'src/app/models/hr-zones.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

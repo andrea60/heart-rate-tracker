@@ -1,7 +1,14 @@
 <button class="btn w-full mb-3" (click)="start()" [disabled]="(sessionActive$ | async)">Start Session</button>
-<div *ngIf="sessionActive$ | async" class="flex justify-center">
-    <div class="h-60">
-        <hrt-hr-viewer [value]="hr$ | async" [zones]="zones$ | async"></hrt-hr-viewer>
+<ng-container *ngIf="sessionActive$ | async">
+    <div class="flex justify-center">
+        <div class="h-60">
+            <hrt-hr-viewer [value]="hr$ | async" [zones]="zones$ | async"></hrt-hr-viewer>
+        </div>
     </div>
-
-</div>
+    <div class="flex justify-center">
+        <div class="w-full">
+            <hrt-zones-bar [value]="hr$ | async" [hrMax]="hrMax$ | async"></hrt-zones-bar>
+        </div>
+    
+    </div>
+</ng-container>

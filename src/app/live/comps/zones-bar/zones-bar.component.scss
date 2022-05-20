@@ -1,0 +1,15 @@
+#progress-bar {
+    -webkit-mask:linear-gradient(#fff 0 0);
+    mask:linear-gradient(#fff 0 0);
+    transition:width ease-in-out .2s;
+
+    &::before {
+        content:'';
+        position:absolute;
+        left:0;
+        top:0;
+        right:0;
+        bottom:0;
+        background-image: linear-gradient(90deg, rgba(0,180,216,1) 0%, rgba(104,179,74,1) 25%, rgba(255,141,13,1) 50%, rgba(255,76,7,1) 75%, rgba(255,2,2,1) 100%);
+    }
+}

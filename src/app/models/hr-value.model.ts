@@ -1,4 +1,4 @@
-import { HRZone } from "./hr-zone-data.model";
+import { HRZone } from "./hr-zones.model";
 
 export interface HRValue {
     offset:number;

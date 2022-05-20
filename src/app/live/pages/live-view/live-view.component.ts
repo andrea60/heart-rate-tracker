@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import { ActivitySessionEffects } from 'src/app/state/activity-session/activity-session.effects';
 import { ActivitySessionState } from 'src/app/state/activity-session/activity-session.reducers';
 import { ActivitySessionActions } from 'src/app/state/app.actions';
-import { ActivitySessionSelectors, DeviceSelectors } from 'src/app/state/app.selectors';
+import { ActivitySessionSelectors, DeviceSelectors, UserParamsSelectors } from 'src/app/state/app.selectors';
 
 @Component({
   selector: 'hrt-live-view',
@@ -14,6 +15,8 @@ export class LiveViewComponent implements OnInit {
   sessionActive$ = this.store.select(ActivitySessionSelectors.hasActiveSession);
   hr$ = this.store.select(ActivitySessionSelectors.getCurrentHR);
   zones$ = this.store.select(ActivitySessionSelectors.getZones);
+  userParams$ = this.store.select(UserParamsSelectors.getAll);
+  hrMax$ = this.userParams$.pipe(map(p => p.hrMax!));
 
   constructor(public store:Store<ActivitySessionState>) { }
 

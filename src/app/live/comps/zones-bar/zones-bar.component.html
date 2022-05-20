@@ -1,0 +1,35 @@
+
+<div class="w-full flex justify-between">
+    <div *ngFor="let zone of zones$ | async" class="w-6 text-center">
+        <hrt-zones-bar-label [hidden]="zone.i % 2 == 0" label="{{zone.fromBpm}}" [active]="zone.active" [zone]="zone.i">
+        </hrt-zones-bar-label>
+    </div>
+</div>
+<div class="w-full relative h-6" >
+    <div class="absolute w-full h-full left-0 top-0 px-3 py-2">
+        <!-- PROGRESS BAR CONTAINER -->
+        <div class="bg-main-900 w-full h-full">
+            <!-- PROGRESS BAR-->
+            <div class="h-full rounded-r-full" id="progress-bar" [style.width]="width$ | async"></div>
+        </div>
+    </div>
+    
+    <div class="absolute w-full h-full left-0 top-0 flex justify-between ">
+        <!-- ZONES MARKERS -->
+        <div *ngFor="let zone of zones$ | async; trackBy:zoneChanged" 
+            class="rounded-full bg-main-100 w-6 h-6 p-1 shadow-zones-{{zone.i}}" 
+            [class.active]="zone.active"
+            [class.shadow-even-sm]="zone.active"
+            [style.background-color]="zone.color">
+        
+            <!-- INNER CIRCLE-->
+            <div class="w-full h-full bg-white rounded-full opacity-50" [hidden]="!zone.active"></div>
+        </div>
+    </div>
+</div>
+<div class="w-full flex justify-between">
+    <div *ngFor="let zone of zones$ | async" class="w-6 text-center">
+        <hrt-zones-bar-label [hidden]="zone.i % 2 != 0" label="{{zone.fromBpm}}" [flip]="true" [active]="zone.active" [zone]="zone.i">
+        </hrt-zones-bar-label>
+    </div>
+</div>
