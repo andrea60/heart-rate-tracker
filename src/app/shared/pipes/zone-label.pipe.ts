@@ -1,9 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HRZone } from 'src/app/models/hr-zones.model';
 import { environment } from 'src/environments/environment';
 
 @Pipe({
   name: 'zoneLabel'
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class ZoneLabelPipe implements PipeTransform {
 

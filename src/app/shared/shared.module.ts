@@ -9,6 +9,8 @@ import { ModalTargetDirective } from './modals/modal-target.directive';
 import { ModalButtonComponent } from './modals/modal-button/modal-button.component';
 import { ModalFooterComponent } from './modals/modal-footer/modal-footer.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { HrChartComponent } from './comps/hr-chart/hr-chart.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 
@@ -21,11 +23,13 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     ModalTargetDirective,
     ModalButtonComponent,
     ModalFooterComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    HrChartComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
+    HighchartsChartModule
   ],
   exports:[
     FontAwesomeModule,
@@ -34,7 +38,8 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     ZoneLabelPipe,
     ModalRendererComponent,
     ModalButtonComponent,
-    ModalFooterComponent
+    ModalFooterComponent,
+    HrChartComponent
   ]
 })
 export class SharedModule { }

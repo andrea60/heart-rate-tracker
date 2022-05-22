@@ -1,7 +1,7 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, map } from 'rxjs';
+import { filter, map, startWith } from 'rxjs';
 import { slideIn } from 'src/app/animations/slide-in.anim';
 import { getHRZone } from 'src/app/logic/get-hr-zone';
 import { ActivitySessionEffects } from 'src/app/state/activity-session/activity-session.effects';
@@ -21,6 +21,8 @@ export class LiveViewComponent implements OnInit {
   hr$ = this.store.select(ActivitySessionSelectors.getCurrentHR).pipe(filter(hr => !!hr));
   currentZone$ = this.hr$.pipe(map(hr => getHRZone(hr!.perc)));
   zones$ = this.store.select(ActivitySessionSelectors.getZones);
+  session$ = this.store.select(ActivitySessionSelectors.getCurrentSession);
+  hrValues$ = this.session$.pipe(map(s => s?.hrValues ?? []));
 
   userParams$ = this.store.select(UserParamsSelectors.getAll);
   hrMax$ = this.userParams$.pipe(map(p => p.hrMax!));

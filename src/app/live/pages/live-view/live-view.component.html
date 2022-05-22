@@ -10,10 +10,12 @@
     <div class="text-center">
         <hrt-zone-badge [zone]="currentZone$ | async"></hrt-zone-badge>
     </div>
-    <div class="flex justify-center">
-        <div class="w-full">
-            <hrt-zones-bar [value]="hr$ | async" [hrMax]="hrMax$ | async"></hrt-zones-bar>
-        </div>
     
+    <div class="w-full">
+        <hrt-zones-bar [value]="hr$ | async" [hrMax]="hrMax$ | async"></hrt-zones-bar>
     </div>
+    <div class="w-full mt-2" *ngIf="hrValues$ | async as hrValues">
+        <hrt-hr-chart [values]="hrValues" [hrMax]="hrMax$ | async" height="16rem"></hrt-hr-chart>
+    </div>
+ 
 </ng-container>

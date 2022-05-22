@@ -12,14 +12,14 @@ export class FakeBTDeviceService implements IBluetoothService {
         return new Promise(resolve => setTimeout(() => {
             this.connected = true;
             resolve({ success: true, devId:'-1', devName:'Fake-BT-Device'})
-        }, 1500));
+        }, 250));
     }
     disconnectAsync(): Promise<void> {
         this.connected = false;
         return Promise.resolve();
     }
     getValueStream(): Observable<number> {
-        return interval(2500).pipe(
+        return interval(500).pipe(
             filter(() => this.connected),
             map(() => Math.floor(90 + Math.random() * 70)),
             share()

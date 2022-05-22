@@ -24,7 +24,10 @@ import { BluetoothService } from './services/bluetooth/bluetooth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppState } from './state/app.state';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import * as Highcharts from 'highcharts';
 
+import HighchartsTheme from '../themes/highcharts/highcharts-default.theme';
+Highcharts.setOptions(HighchartsTheme);
 
 const reducers: ActionReducerMap<AppState> = {
   user: userReducers,
