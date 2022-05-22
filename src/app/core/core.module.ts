@@ -10,6 +10,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { SharedModule } from '../shared/shared.module';
+import { ModalsModule } from '../modals/modals.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     CoreRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalsModule
   ]
 })
 export class CoreModule { 

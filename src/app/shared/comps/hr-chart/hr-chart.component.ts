@@ -117,15 +117,16 @@ export class HrChartComponent implements OnChanges {
   }
 
   updateChart() {
+    
     // set data
     this.options.series![0] = {
       type: 'area',
       data: this.generateChartData()
     };
     // set yAxis range
-    const min = Math.floor(this.hrMax! * 0.5) - 10;
-    const max = Math.floor(this.hrMax! * 0.9) + 10;
-
+    const min = this.hrZones!.find(z => z.i == 0)!.bpmFrom - 10;
+    const max = this.hrZones!.find(z => z.i == 4)!.bpmFrom + 10;
+  
     if (Array.isArray(this.options.yAxis)) {
       const yAxisOpts = { max, min, tickPositions: [min, ...this.hrZones!.map(z => z.bpmFrom), max] }
       this.options.yAxis[0] = {

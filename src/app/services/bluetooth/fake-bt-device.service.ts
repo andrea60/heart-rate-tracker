@@ -19,7 +19,7 @@ export class FakeBTDeviceService implements IBluetoothService {
         return Promise.resolve();
     }
     getValueStream(): Observable<number> {
-        return interval(500).pipe(
+        return interval(1500).pipe(
             filter(() => this.connected),
             map(() => Math.floor(90 + Math.random() * 70)),
             share()

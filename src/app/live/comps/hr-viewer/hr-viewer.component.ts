@@ -17,7 +17,7 @@ export class HrViewerComponent implements OnInit {
     chart: {
       backgroundColor: 'transparent',
       type: 'pie',
-      margin:0,
+      margin:0  
     },
     plotOptions:{
       pie:{

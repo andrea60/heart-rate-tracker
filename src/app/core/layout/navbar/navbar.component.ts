@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Store } from '@ngrx/store';
 import { map, timer } from 'rxjs';
-import { ModalService } from 'src/app/shared/modals/modal.service';
+import { ModalService } from 'src/app/modals/modal.service';
 import { SessionStatus } from 'src/app/state/activity-session/activity-session.reducers';
 import { ActivitySessionActions } from 'src/app/state/app.actions';
 import { ActivitySessionSelectors } from 'src/app/state/app.selectors';

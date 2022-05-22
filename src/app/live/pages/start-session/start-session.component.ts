@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { delay, filter, interval, map, startWith, switchMap, take, timer } from 'rxjs';
-import { ModalService } from 'src/app/shared/modals/modal.service';
+import { ModalService } from 'src/app/modals/modal.service';
 import { ActivitySessionActions } from 'src/app/state/app.actions';
 import { ActivitySessionSelectors, DeviceSelectors } from 'src/app/state/app.selectors';
 
