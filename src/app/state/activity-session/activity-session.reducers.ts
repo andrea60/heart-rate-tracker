@@ -7,6 +7,7 @@ import { generateHRZoneData, HRZone, HRZoneData } from "src/app/models/hr-zones.
 import { HRValue } from "src/app/models/hr-value.model";
 import { getHRZone } from "src/app/logic/get-hr-zone";
 import { recomputeZones } from "src/app/logic/recompute-zones";
+import { computeCaloriesOfSession } from "src/app/logic/compute-calories";
 export type SessionStatus = 'idle' | 'preparing' | 'running' | 'paused';
 
 export interface ActivitySessionState {
@@ -25,6 +26,7 @@ function createDefaultSession(): ActivitySession{
         hrValues: [],
         start: new Date(),
         hr: null,
+        kcal: NaN,
         zones: generateHRZoneData({ perc: 0, totalTime: 0 })
     }
 }
@@ -68,6 +70,9 @@ export default createReducer(
         }
         currentSession?.hrValues.push(hrValue);
         currentSession.hr = hrValue;
+
+        // computes calories
+        currentSession.kcal = computeCaloriesOfSession(currentSession, userParams);
 
     
     })),
