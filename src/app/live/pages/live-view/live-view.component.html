@@ -10,10 +10,17 @@
     <div class="text-center">
         <hrt-zone-badge [zone]="currentZone$ | async"></hrt-zone-badge>
     </div>
-    
     <div class="w-full">
         <hrt-zones-bar [value]="hr$ | async" [hrMax]="hrMax$ | async"></hrt-zones-bar>
     </div>
+    <div class="grid grid-cols-2 grid-rows-2 gap-2 my-2">
+        <hrt-simple-value-card [value]="duration$ | async"></hrt-simple-value-card>
+        <hrt-simple-value-card [value]="calories$ | async" um="kcal"></hrt-simple-value-card>
+        <hrt-simple-value-card [value]="avgBpm$ | async" um="BPM"></hrt-simple-value-card>
+        <hrt-simple-value-card [value]="avgPerc$ | async" um="%"></hrt-simple-value-card>
+      
+    </div>
+    
     <div class="w-full mt-2" *ngIf="hrValues$ | async as hrValues">
         <hrt-hr-chart [values]="hrValues" [hrMax]="hrMax$ | async" height="16rem"></hrt-hr-chart>
     </div>

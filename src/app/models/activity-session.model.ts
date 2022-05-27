@@ -10,6 +10,10 @@ export interface ActivitySession {
     hr: HRValue | null;
     /** Total calories burned (precomputed for performance reason) */
     kcal: number;
+    /** Average BPM */
+    avgBpm: number;
+    /** Average max-hr percentage */
+    avgPerc: number;
     /** HR Zones distribution */
     zones: HRZoneData<{
         perc: number,

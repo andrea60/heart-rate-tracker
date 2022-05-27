@@ -20,7 +20,7 @@ export function computeCaloriesBurned(duration:number, avgHr:number, sex:'M' | '
 /** Computes the calories burned during an activity session */
 export function computeCaloriesOfSession(session:ActivitySession, userParams:UserParams) {
     const duration = getSessionDuration(session) / 60;
-    const avgHr = avg(session.hrValues, val => val.bpm);
+   
     const age = getAge(userParams.birthDate);
-    return computeCaloriesBurned(duration, avgHr, userParams.sex, userParams.weight, age);
+    return computeCaloriesBurned(duration, session.avgPerc, userParams.sex, userParams.weight, age);
 }

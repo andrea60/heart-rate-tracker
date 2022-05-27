@@ -8,6 +8,7 @@ import { HRValue } from "src/app/models/hr-value.model";
 import { getHRZone } from "src/app/logic/get-hr-zone";
 import { recomputeZones } from "src/app/logic/recompute-zones";
 import { computeCaloriesOfSession } from "src/app/logic/compute-calories";
+import { avg } from "src/app/lib/array/avg";
 export type SessionStatus = 'idle' | 'preparing' | 'running' | 'paused';
 
 export interface ActivitySessionState {
@@ -27,6 +28,8 @@ function createDefaultSession(): ActivitySession{
         start: new Date(),
         hr: null,
         kcal: NaN,
+        avgBpm: NaN,
+        avgPerc: NaN,
         zones: generateHRZoneData({ perc: 0, totalTime: 0 })
     }
 }
@@ -48,9 +51,9 @@ export default createReducer(
         if (!draft.currentSession || state.status != 'running')
             return;
 
-        const { currentSession } = draft;
+        const { currentSession: cur } = draft;
 
-        const offset = time.valueOf() - currentSession.start.valueOf();
+        const offset = time.valueOf() - cur.start.valueOf();
         const perc = value / userParams.hrMax * 100;
         const hrValue:HRValue = { 
             offset, 
@@ -60,21 +63,22 @@ export default createReducer(
         };
 
         // compute delta from last value to calc hr-zones distribution
-        if (currentSession.hr) {
-            const delta = offset - currentSession.hr?.offset;
+        if (cur.hr) {
+            const delta = offset - cur.hr?.offset;
 
-            currentSession.zones[hrValue.zone].totalTime += delta;
+            cur.zones[hrValue.zone].totalTime += delta;
 
             // recompute the zones distribution
-            currentSession.zones = recomputeZones(currentSession.zones);
+            cur.zones = recomputeZones(cur.zones);
         }
-        currentSession?.hrValues.push(hrValue);
-        currentSession.hr = hrValue;
+        cur?.hrValues.push(hrValue);
+        cur.hr = hrValue;
 
-        // computes calories
-        currentSession.kcal = computeCaloriesOfSession(currentSession, userParams);
 
-    
+        // computes heavy values
+        cur.kcal = computeCaloriesOfSession(cur, userParams);
+        cur.avgBpm = avg(cur.hrValues, v => v.bpm);
+        cur.avgPerc = avg(cur.hrValues, v => v.perc);
     })),
 
 )

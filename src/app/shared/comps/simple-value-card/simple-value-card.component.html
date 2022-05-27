@@ -1,0 +1,12 @@
+<hrt-card>
+    <div class="flex text-2xl">
+        <div class="flex-auto" *ngIf="icon">
+            <fa-icon [icon]="icon"></fa-icon>
+        </div>
+        <div class="flex-1"> 
+           <span *ngIf="isNumber else stringVal">{{value | number:'1.0-0'}}</span>
+           <ng-template #stringVal>{{value}}</ng-template>
+           <span class="text-base ml-1">{{um}}</span>
+        </div>
+    </div>
+</hrt-card>

@@ -8,6 +8,7 @@ import { HrChartComponent } from './comps/hr-chart/hr-chart.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ModalsModule } from '../modals/modals.module';
 import { CardComponent } from './comps/card/card.component';
+import { SimpleValueCardComponent } from './comps/simple-value-card/simple-value-card.component';
 
 
 
@@ -18,6 +19,7 @@ import { CardComponent } from './comps/card/card.component';
     SpinnerComponent,
     HrChartComponent,
     CardComponent,
+    SimpleValueCardComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { CardComponent } from './comps/card/card.component';
     SpinnerComponent,
     ZoneLabelPipe,
     HrChartComponent,
-    CardComponent
+    CardComponent,
+    SimpleValueCardComponent
   ]
 })
 export class SharedModule { }
