@@ -1,12 +1,13 @@
 <div class="h-full w-full flex items-center justify-center flex-col">
     <fa-icon icon="fire-flame-curved" class="text-5xl text-primary-dark"></fa-icon>
-    <h1 class="text-3xl font-bold my-10">
+    <h1 class="text-3xl font-bold mt-5">
         Start a new session
     </h1>
 
     <div [ngSwitch]="sessionStatus$ | async" class="text-center">
         <ng-container *ngSwitchCase="'idle'">
-            <button class="btn btn-primary" (click)="start()">
+            <hrt-session-settings class="mt-5 mb-10" [(settings)]="settings"></hrt-session-settings>
+            <button class="btn btn-primary" (click)="start()" [disabled]="!canStart">
                 Start Now
             </button>
         </ng-container>

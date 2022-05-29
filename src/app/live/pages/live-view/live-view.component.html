@@ -3,7 +3,7 @@
         <fa-icon icon="pause"></fa-icon> Session is paused!
     </div>
     <div class="flex justify-center">
-        <div class="h-60">
+        <div class="h-52">
             <hrt-hr-viewer [value]="hr$ | async" [zones]="zones$ | async"></hrt-hr-viewer>
         </div>
     </div>
@@ -13,11 +13,11 @@
     <div class="w-full">
         <hrt-zones-bar [value]="hr$ | async" [hrMax]="hrMax$ | async"></hrt-zones-bar>
     </div>
-    <div class="grid grid-cols-2 grid-rows-2 gap-2 my-2">
-        <hrt-simple-value-card [value]="duration$ | async"></hrt-simple-value-card>
-        <hrt-simple-value-card [value]="calories$ | async" um="kcal"></hrt-simple-value-card>
-        <hrt-simple-value-card [value]="avgBpm$ | async" um="BPM"></hrt-simple-value-card>
-        <hrt-simple-value-card [value]="avgPerc$ | async" um="%"></hrt-simple-value-card>
+    <div class="grid grid-cols-2 grid-rows-2 gap-3 my-3">
+        <hrt-simple-value-card icon="clock" [value]="duration$ | async" type="time" ></hrt-simple-value-card>
+        <hrt-simple-value-card icon="fire" [value]="calories$ | async" type="number" um="kcal"></hrt-simple-value-card>
+        <hrt-simple-value-card icon="heart-pulse" [value]="avgBpm$ | async" type="number" um="BPM"></hrt-simple-value-card>
+        <hrt-simple-value-card icon="heart-circle-bolt" [value]="avgPerc$ | async" type="number" um="%"></hrt-simple-value-card>
       
     </div>
     

@@ -12,9 +12,9 @@ import getSessionDuration from "./session/get-session-duration";
 /** @param age Athlete's age in years */
 export function computeCaloriesBurned(duration:number, avgHr:number, sex:'M' | 'F', weight:number, age:number) {
     if (sex === 'F')
-        return duration * (0.4472*avgHr - 0.1263*weight + 0.074*age - 20.4022) / 4.184;
+        return Math.round(duration * (0.4472*avgHr - 0.1263*weight + 0.074*age - 20.4022) / 4.184);
     else
-        return duration * (0.6309*avgHr - 0.1988*weight + 0.2017*age - 55.0969) / 4.184;
+        return Math.round(duration * (0.6309*avgHr + 0.1988*weight + 0.2017*age - 55.0969) / 4.184);
 }
 
 /** Computes the calories burned during an activity session */

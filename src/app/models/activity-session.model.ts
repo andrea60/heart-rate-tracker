@@ -5,6 +5,7 @@ export interface ActivitySession {
     id:string;
     start:Date;
     end?:Date;
+    activityTypeId:string;
     hrValues:HRValue[];   
     /** Current HR Value */
     hr: HRValue | null;

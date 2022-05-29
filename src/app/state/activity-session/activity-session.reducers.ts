@@ -9,11 +9,13 @@ import { getHRZone } from "src/app/logic/get-hr-zone";
 import { recomputeZones } from "src/app/logic/recompute-zones";
 import { computeCaloriesOfSession } from "src/app/logic/compute-calories";
 import { avg } from "src/app/lib/array/avg";
+import { ActivitySessionSettings } from "src/app/models/activity-session-settings.model";
 export type SessionStatus = 'idle' | 'preparing' | 'running' | 'paused';
 
 export interface ActivitySessionState {
     currentSession: ActivitySession | null;
     status: SessionStatus;    
+    settings?: ActivitySessionSettings;
 }
 
 const initialState:ActivitySessionState = {
@@ -21,9 +23,10 @@ const initialState:ActivitySessionState = {
     status: 'idle'
 };
 
-function createDefaultSession(): ActivitySession{
+function createDefaultSession(activityTypeId:string): ActivitySession{
     return {
         id: getUUID(),
+        activityTypeId,
         hrValues: [],
         start: new Date(),
         hr: null,
@@ -36,8 +39,12 @@ function createDefaultSession(): ActivitySession{
 
 export default createReducer(
     initialState,
-    on(prepareSession, (state) => ({ ...state, status: 'preparing' })),
-    on(startSession, (state) => ({...state, status:'running', currentSession: createDefaultSession() })),
+    on(prepareSession, (state, settings) => ({ ...state, status: 'preparing', settings })),
+    on(startSession, (state) => ({
+        ...state, 
+        status:'running', 
+        currentSession: createDefaultSession(state.settings!.activityTypeId) 
+    })),
     on(pauseSession, (state) => ({...state, status:'paused' })),
     on(resumeSession, (state) => ({...state, status:'running'})),
     on(closeSession, (state) => {

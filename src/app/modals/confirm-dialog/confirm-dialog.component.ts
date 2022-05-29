@@ -6,25 +6,24 @@ import { ModalService } from '../modal.service';
   selector: 'hrt-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
 })
-export class ConfirmDialogComponent implements OnInit, ModalContent<boolean> {
-
+export class ConfirmDialogComponent extends ModalContent<boolean> implements OnInit  {
+ 
   @Input()
   text!:string;
+  b!:boolean;
 
   constructor(
-    private modal:ModalService
-  ) { }
-
-  onModalInit(): void {
-    
+    modal:ModalService
+  ) { 
+    super(modal);
   }
 
   ngOnInit(): void {
   }
   confirm(){
-    this.modal._complete('complete', true);
+    this.closeModal(true);
   }
   cancel(){
-    this.modal._complete('complete', false);
+    this.cancelModal();
   }
 }

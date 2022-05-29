@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { delay, filter, interval, map, startWith, switchMap, take, timer } from 'rxjs';
 import { ModalService } from 'src/app/modals/modal.service';
+import { ActivitySessionSettings } from 'src/app/models/activity-session-settings.model';
+
 import { ActivitySessionActions } from 'src/app/state/app.actions';
 import { ActivitySessionSelectors, DeviceSelectors } from 'src/app/state/app.selectors';
 
@@ -15,6 +17,7 @@ export class StartSessionComponent implements OnInit {
   sessionStatus$ = this.store.select(ActivitySessionSelectors.getStatus);
   deviceStatus$ = this.store.select(DeviceSelectors.getStatus);
 
+  settings?:ActivitySessionSettings;
 
   countdown$ = this.sessionStatus$.pipe(
     filter(status => status ===  'running'),
@@ -22,6 +25,9 @@ export class StartSessionComponent implements OnInit {
     switchMap(() => interval(1000).pipe(startWith(-1), take(3), map(x => 2 - x)))
   )
 
+  get canStart(){
+    return !!this.settings;
+  }
   constructor(
     private store:Store, 
     private router:Router,
@@ -34,7 +40,8 @@ export class StartSessionComponent implements OnInit {
   }
 
   start(){
-    this.store.dispatch(ActivitySessionActions.prepareSession());
+    if (this.settings)
+      this.store.dispatch(ActivitySessionActions.prepareSession(this.settings));
   }
 
 

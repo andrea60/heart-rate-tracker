@@ -1,11 +1,14 @@
 <hrt-card>
-    <div class="flex text-2xl">
-        <div class="flex-auto" *ngIf="icon">
+    <div class="flex text-xl mx-1">
+        <div class="flex-none mr-2" *ngIf="icon">
             <fa-icon [icon]="icon"></fa-icon>
         </div>
         <div class="flex-1"> 
-           <span *ngIf="isNumber else stringVal">{{value | number:'1.0-0'}}</span>
-           <ng-template #stringVal>{{value}}</ng-template>
+            <span [ngSwitch]="type" class="font-bold">
+                <ng-container *ngSwitchCase="'number'">{{numValue$ | async}}</ng-container>
+                <ng-container *ngSwitchCase="'time'">{{timeValue$ | async}}</ng-container>
+                <ng-container *ngSwitchDefault>{{value}}</ng-container>
+            </span>
            <span class="text-base ml-1">{{um}}</span>
         </div>
     </div>

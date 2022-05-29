@@ -4,6 +4,10 @@ import { getUUID } from 'src/app/lib/get-uuid';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ModalContent } from './modal-content';
 
+
+type GenericOf<T> = T extends ModalContent<infer X> ? X : never;
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,13 +26,13 @@ export class ModalService {
   constructor() { }
 
   /** Renders and opens a new modal using the component specified as body */
-  openModal<C extends ModalContent<R>, R>(comp:Type<C>, inputs?:Partial<C>) : Observable<{ reason: ModalCloseReason, data: R }> {
+  openModal<TComp extends ModalContent<TRet>,TRet>(comp:Type<TComp>, inputs?:Partial<TComp>) : Observable<{ reason: ModalCloseReason, data: GenericOf<TComp> }> {
    
     this.out$.next({ action:'open', componentClass: comp, inputs });
     return this.in$.pipe(
         map(payload => ({ 
           reason: payload.reason, 
-          data: payload.data as R
+          data: payload.data as GenericOf<TComp>
         })),
         take(1))
   }
@@ -48,3 +52,5 @@ export class ModalService {
 }
 
 export type ModalCloseReason = 'cancel' | 'complete'
+
+

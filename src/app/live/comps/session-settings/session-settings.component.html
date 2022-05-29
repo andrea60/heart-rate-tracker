@@ -1,0 +1,8 @@
+<form [formGroup]="form" class="{{customClass}}">
+    <div class="form-group">
+        <label>Choose a sport type</label>
+        <select formControlName="activityTypeId">
+            <option  *ngFor="let type of types$ | async" [value]="type.id">{{type.name}}</option>
+        </select>
+    </div>
+</form>

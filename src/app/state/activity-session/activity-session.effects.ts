@@ -26,6 +26,7 @@ export class ActivitySessionEffects {
         ofType(DeviceActions.connected),
         joinState(() => this.store.select(ActivitySessionSelectors.getStatus)),
         filter(([_,status]) => status == 'preparing'),
+        joinState(() => this.store.select(ActivitySessionSelectors.getSessionSettings)),
         map(() => ActivitySessionActions.startSession()),
       )
   );

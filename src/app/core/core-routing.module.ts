@@ -12,6 +12,7 @@ const routes:Route[] = [
         canActivate:[AuthGuardService],
         children:[
             { path:'live', loadChildren:() => import('../live/live.module').then(m => m.LiveModule)},
+            { path:'history', loadChildren: () => import('../history/history.module').then(m => m.HistoryModule) }
         ]
     },
     {

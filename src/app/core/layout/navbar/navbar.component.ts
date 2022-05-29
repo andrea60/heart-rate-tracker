@@ -91,7 +91,7 @@ export class NavbarComponent implements OnInit {
   }
   stop(){
     this.modal.openConfirmDialog('Are you sure you want to stop?').subscribe(answer => {
-      if (answer)
+      if (answer.data === true)
         this.store.dispatch(ActivitySessionActions.closeSession());
     });
   }

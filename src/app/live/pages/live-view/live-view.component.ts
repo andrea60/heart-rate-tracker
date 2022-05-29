@@ -41,10 +41,6 @@ export class LiveViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  start(){
-    this.store.dispatch(ActivitySessionActions.prepareSession());
-  }
-
   stop(){
     this.store.dispatch(ActivitySessionActions.closeSession());
   }
