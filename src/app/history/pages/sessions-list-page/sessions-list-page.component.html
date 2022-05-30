@@ -1,7 +1,10 @@
 
-<div *ngFor="let week of (weeks$ | async)">
-
-    <div class="mb-2" *ngFor="let session of sessions$ | async">
+<div *ngFor="let week of (weekGroups$ | async)" class="mb-3">
+    <p class="text-center mb-2 flex items-center justify-center">
+        <span class="material-icons mr-2">calendar_month</span>
+        {{getLabel(week.key)}}
+    </p>
+    <div class="mb-2" *ngFor="let session of week.value">
         <hrt-session-entry [session]="session"></hrt-session-entry>
     </div>
 </div>
