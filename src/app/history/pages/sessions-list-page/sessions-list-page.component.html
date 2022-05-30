@@ -1,4 +1,7 @@
 
-<div class="mb-2" *ngFor="let session of sessions$ | async">
-    <hrt-session-entry [session]="session"></hrt-session-entry>
+<div *ngFor="let week of (weeks$ | async)">
+
+    <div class="mb-2" *ngFor="let session of sessions$ | async">
+        <hrt-session-entry [session]="session"></hrt-session-entry>
+    </div>
 </div>

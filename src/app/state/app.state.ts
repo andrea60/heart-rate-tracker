@@ -11,7 +11,8 @@ export interface AppState {
     activitySession: ActivitySessionState,
     bluetooth: BluetoothConfig,
     device: DeviceState,
-    archive: ArchiveState
+    archive: ArchiveState,
+    
 
 }
 

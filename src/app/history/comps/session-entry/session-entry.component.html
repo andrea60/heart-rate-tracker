@@ -1,4 +1,11 @@
 <hrt-card>
-    <span class="material-icons">emoji_events</span>
-    {{session.start | date }}
+    <div class="flex items-center">
+        <div class="flex-grow-0 mx-2">
+            <span class="material-icons text-3xl">{{sessionType$ | async}}</span>
+        </div>
+        <div class="flex-1">
+            <p class="mb-0"><span class="text-primary font-bold">Running</span> for 20 mins </p>
+            <div class="text-xs">{{session.start | date }}</div>
+        </div>
+    </div>
 </hrt-card>

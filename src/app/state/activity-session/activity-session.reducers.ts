@@ -10,17 +10,21 @@ import { recomputeZones } from "src/app/logic/recompute-zones";
 import { computeCaloriesOfSession } from "src/app/logic/compute-calories";
 import { avg } from "src/app/lib/array/avg";
 import { ActivitySessionSettings } from "src/app/models/activity-session-settings.model";
+import { ActivityType } from "src/app/models/activity-type.model";
+import activityTypes from 'src/data/activity-types.json';
 export type SessionStatus = 'idle' | 'preparing' | 'running' | 'paused';
 
 export interface ActivitySessionState {
     currentSession: ActivitySession | null;
     status: SessionStatus;    
     settings?: ActivitySessionSettings;
+    activityTypes: ActivityType[]
 }
 
 const initialState:ActivitySessionState = {
     currentSession: null,
-    status: 'idle'
+    status: 'idle',
+    activityTypes: activityTypes
 };
 
 function createDefaultSession(activityTypeId:string): ActivitySession{

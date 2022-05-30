@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { getActivityTypes } from 'src/app/logic/get-session-types';
 import { ActivitySessionSettings } from 'src/app/models/activity-session-settings.model';
+import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
 
 
 @Component({
@@ -24,13 +25,15 @@ export class SessionSettingsComponent implements OnInit {
   @Input('class')
   customClass:string = '';
 
-  types$ = getActivityTypes();
+  types$ = this.store.select(ActivitySessionSelectors.getTypes);
 
   form = new FormGroup({
     activityTypeId: new FormControl(null, [Validators.required])
   })
 
-  constructor() { }
+  constructor(
+    private store:Store
+  ) { }
 
   ngOnInit(): void {
     if (!this._settings)
