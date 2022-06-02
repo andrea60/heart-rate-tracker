@@ -1,4 +1,4 @@
-<div class="p-3 pb-16 h-full w-full">
+<div class="p-3 pb-16 h-full w-full bg-main" id="main-content" [class.modal-shrink]="mustShrink$ | async">
     <router-outlet></router-outlet>
 </div>
 <hrt-navbar></hrt-navbar>

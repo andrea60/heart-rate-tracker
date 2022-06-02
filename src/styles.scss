@@ -11,10 +11,10 @@ body,html {
     margin:0;
     padding:0;
     overflow-y:scroll;
+    --behind-color:#111;
 }
 body {
-    background: rgb(34,34,44);
-    //background: linear-gradient(45deg, rgba(34,34,44,1) 0%, rgba(56,56,71,1) 100%);
+    background-color:var(--behind-color);
     font-family:'Inter', 'sans-serif';
     color:#eee;
     font-size:.9rem;

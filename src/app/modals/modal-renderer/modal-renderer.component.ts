@@ -4,7 +4,7 @@ import { filter, switchMap, take, tap } from 'rxjs';
 import { switchAdd } from 'src/app/lib/switch-add';
 import { ModalContent } from '../modal-content';
 import { ModalTargetDirective } from '../modal-target.directive';
-import { ModalService } from '../modal.service';
+import { ModalService, ModalType } from '../modal.service';
 
 @Component({
   selector: 'hrt-modal-renderer',
@@ -24,11 +24,11 @@ import { ModalService } from '../modal.service';
     trigger('slide', [
       transition(':enter', [
         style({ transform: 'translateY(1000px)' }),
-        animate('.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)', style({ transform: '*' }))
+        animate('.25s cubic-bezier(0.250, 0.460, 0.450, 0.940)', style({ transform: '*' }))
       ]),
       transition(':leave', [
         style({ transform: '*' }),
-        animate('.2s cubic-bezier(0.250, 0.460, 0.450, 0.940)', style({ transform: 'translateY(1000px)' }))
+        animate('.3s cubic-bezier(0.250, 0.460, 0.450, 0.940)', style({ transform: 'translateY(1000px)' }))
       ]),
     ])
   ]
@@ -38,7 +38,9 @@ export class ModalRendererComponent implements OnInit, AfterViewInit {
   @ViewChildren(ModalTargetDirective)
   renderTarget!: QueryList<ModalTargetDirective>;
   open: boolean = false;
+  type: ModalType = 'dialog';
   componentReady: boolean = false;
+  title?:string;
 
   constructor(
     private modalSrv: ModalService
@@ -55,8 +57,13 @@ export class ModalRendererComponent implements OnInit, AfterViewInit {
       tap(() => this.open = true),
       switchAdd(() => this.renderTarget.changes.pipe(take(1)))
     ).subscribe((([descr]) => {
+      
       // all preliminary operations have completed, now component can render
-      setTimeout(() => this.renderComponent(descr.componentClass!, descr.inputs), 1);
+      setTimeout(() => {
+        this.type = descr.type || 'dialog';
+        this.title = descr.title;
+        this.renderComponent(descr.componentClass!, descr.inputs)
+      }, 1);
     }));
 
 
@@ -77,9 +84,10 @@ export class ModalRendererComponent implements OnInit, AfterViewInit {
     viewContainerRef.clear();
 
     const { instance } = viewContainerRef.createComponent<C>(componentClass);
-    if (inputs)
+    if (inputs) {
       for (let k in inputs)
         instance[k] = inputs[k]!;
+    }
 
     instance.onModalInit();
 

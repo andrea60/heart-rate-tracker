@@ -1,0 +1,8 @@
+#main-content {
+    background: rgb(34,34,44);
+    transition:transform .25s cubic-bezier(0.250, 0.460, 0.450, 0.940), border-radius .25s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+    &.modal-shrink {
+        transform: scale(0.92, 0.95);
+        border-radius:1rem;
+    }
+}

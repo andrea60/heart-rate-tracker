@@ -1,6 +1,6 @@
 import { ModalService } from "./modal.service";
 
-export class ModalContent<TRes> {
+export abstract class ModalContent<TRes = never> {
     private _result?:TRes;
     constructor(
         protected _modal:ModalService

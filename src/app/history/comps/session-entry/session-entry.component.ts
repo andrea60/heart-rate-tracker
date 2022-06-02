@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
+import { ModalService } from 'src/app/modals/modal.service';
 import { ActivitySession } from 'src/app/models/activity-session.model';
 import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
+import { SessionDetailsComponent } from '../session-details/session-details.component';
 
 @Component({
   selector: 'hrt-session-entry',
@@ -17,12 +19,15 @@ export class SessionEntryComponent implements OnInit {
     map(icon => icon || this.DEFAULT_ICON)
   )
   constructor(
-    private store:Store
+    private store:Store,
+    private modal:ModalService
   ) { }
 
   ngOnInit(): void {
     if (!this.session)
       throw 'SessionEntryComponent must have a session input';
   }
-
+  openDetails(){
+    this.modal.openModal(SessionDetailsComponent, { type:'card', title: 'Session details', inputs: { id: this.session.id }});
+  }
 }

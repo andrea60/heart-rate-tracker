@@ -1,0 +1,3 @@
+<div *ngIf="session$ | async as session">
+    <hrt-hr-chart [values]="session.hrValues" [hrMax]="(userParams$ | async)!.hrMax"></hrt-hr-chart>
+</div>

@@ -1,0 +1,12 @@
+.modal-container {
+    @apply fixed left-0 top-0 w-full h-full flex items-center justify-center;
+
+    &.modal-card {
+        @apply items-end;
+        .modal-content {
+            @apply w-full rounded-b-none;;
+            height:calc(100% - 50px);
+        }
+    }
+}
+
