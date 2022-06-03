@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { ActivitySessionSettings } from 'src/app/models/activity-session-settings.model';
@@ -27,8 +27,8 @@ export class SessionSettingsComponent implements OnInit {
 
   types$ = this.store.select(ActivitySessionSelectors.getTypes);
 
-  form = new FormGroup({
-    activityTypeId: new FormControl(null, [Validators.required])
+  form = new UntypedFormGroup({
+    activityTypeId: new UntypedFormControl(null, [Validators.required])
   })
 
   constructor(
