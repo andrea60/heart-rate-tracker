@@ -1,3 +1,17 @@
 <div *ngIf="session$ | async as session">
+    <div class="text-center mb-4">
+        <h5 class="text-lg">Session Details</h5>
+    </div>
+    <div class="flex justify-between">
+        <hrt-hr-viewer title="Heart Rate Zones" [zones]="zones$ | async" mode="review" size="14rem"></hrt-hr-viewer>
+        <div class="flex flex-col h-56 justify-between">
+            <hrt-simple-value-card icon="clock" [value]="1234123" type="time" ></hrt-simple-value-card>
+            <hrt-simple-value-card icon="fire" [value]="522" type="number" um="kcal"></hrt-simple-value-card>
+            <hrt-simple-value-card icon="heart-pulse" [value]="123" type="number" um="BPM"></hrt-simple-value-card>
+            <hrt-simple-value-card icon="heart-circle-bolt" [value]="165" type="number" um="%"></hrt-simple-value-card>
+        </div>
+    </div>
+    <hr class="mt-8 mb-4">
+    <h2 class="text-center text-lg">Heart Rate Trend</h2>
     <hrt-hr-chart [values]="session.hrValues" [hrMax]="(userParams$ | async)!.hrMax"></hrt-hr-chart>
 </div>

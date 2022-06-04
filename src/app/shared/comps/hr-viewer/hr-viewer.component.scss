@@ -1,0 +1,7 @@
+:host > div {
+    
+    &.live {
+        @apply border-1 border-primary;
+        box-shadow:0 0 5px 1px #00b4d850, 0 0 5px 1px #00b4d850 inset;
+    }
+}

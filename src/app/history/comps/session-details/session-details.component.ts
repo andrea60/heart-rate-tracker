@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { switchMap, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { ObservableInputs } from 'src/app/lib/observable-inputs';
 import { ModalContent } from 'src/app/modals/modal-content';
 import { ModalService } from 'src/app/modals/modal.service';
-import { ArchiveSelectors, UserParamsSelectors } from 'src/app/state/app.selectors';
+import { ActivitySessionSelectors, ArchiveSelectors, UserParamsSelectors } from 'src/app/state/app.selectors';
 
 @Component({
   selector: 'hrt-session-details',
@@ -28,6 +28,8 @@ export class SessionDetailsComponent extends ModalContent implements OnInit, OnC
   );
 
   userParams$ = this.store.select(UserParamsSelectors.getAll);
+  zones$ = this.session$.pipe(map(s => s!.zones));
+
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('Adsasd');

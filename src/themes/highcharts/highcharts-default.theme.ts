@@ -12,7 +12,20 @@ const theme:Highcharts.Options = {
         }
     },
     plotOptions:{
-        
+        series:{
+            dataLabels: {
+                
+                shadow: {
+                    color:'red',
+                    width:2,
+                    opacity:1
+                },
+                style: {
+                    textOutline:undefined,
+                    textShadow:'0px 0px 2px #222'
+                }
+            }
+        }
     },
     yAxis:{
         gridLineColor: lineColor,

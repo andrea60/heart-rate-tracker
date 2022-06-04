@@ -9,6 +9,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { ModalsModule } from '../modals/modals.module';
 import { CardComponent } from './comps/card/card.component';
 import { SimpleValueCardComponent } from './comps/simple-value-card/simple-value-card.component';
+import { DurationPipe } from './pipes/duration.pipe';
+import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
 
 
 
@@ -20,6 +22,8 @@ import { SimpleValueCardComponent } from './comps/simple-value-card/simple-value
     HrChartComponent,
     CardComponent,
     SimpleValueCardComponent,
+    DurationPipe,
+    HrViewerComponent
   ],
   imports: [
     CommonModule,
@@ -32,9 +36,11 @@ import { SimpleValueCardComponent } from './comps/simple-value-card/simple-value
     ZoneBadgeComponent,
     SpinnerComponent,
     ZoneLabelPipe,
+    DurationPipe,
     HrChartComponent,
     CardComponent,
-    SimpleValueCardComponent
+    SimpleValueCardComponent,
+    HrViewerComponent
   ]
 })
 export class SharedModule { }

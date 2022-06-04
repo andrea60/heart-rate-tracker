@@ -4,7 +4,7 @@
 
     <!-- STRUCTURE -->
     <div class="modal-container modal-{{type}}" *ngIf="open">
-        <div class="modal-content bg-main shadow-lg rounded-lg " @slide>
+        <div class="modal-content bg-back shadow-lg rounded-lg " @slide>
             <hrt-modal-header *ngIf="type === 'card'" [title]="title"></hrt-modal-header>
             <div class="p-3">
                 <ng-template hrtModalTarget></ng-template>

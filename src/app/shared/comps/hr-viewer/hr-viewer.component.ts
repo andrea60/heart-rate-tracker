@@ -10,39 +10,59 @@ import { environment } from 'src/environments/environment';
   styleUrls:['./hr-viewer.component.scss']
 })
 export class HrViewerComponent implements OnInit {
-  Highcharts: typeof Highcharts = Highcharts;
-  updateFlag = false;
+  protected Highcharts: typeof Highcharts = Highcharts;
+  protected updateFlag = false;
 
-  options: Highcharts.Options = {
+  protected options: Highcharts.Options = {
     chart: {
       backgroundColor: 'transparent',
       type: 'pie',
-      margin:0  
+      margin:0
     },
+
     plotOptions:{
       pie:{
         dataLabels:{
-          enabled: false
+          enabled: false,
+          distance: -15,
+          format:'{point.percentage:.0f} %',
+          filter: {
+            property: 'percentage',
+            operator: '>',
+            value: 5
+          },
         },
         borderWidth:0,
         innerSize:'85%',
         tooltip: {
-          pointFormatter: undefined
+          pointFormatter: undefined,
+          valueDecimals:0,
+          valueSuffix:'%'
         }
-      }
+      },
     },
-    title: { text: undefined },
+    title: { text: this.title },
     credits: {
       enabled: false
     },
     series: []
   }
+  @Input()
+  mode: 'live' | 'review' = 'live';
 
   @Input()
   value: HRValue | null = null;
 
   @Input()
   zones: HRZoneData<{ perc: number }> | null = null;
+
+  @Input()
+  size:String = '12rem';
+
+  @Input()
+  title?:string;
+
+
 
   constructor() { }
 
@@ -58,7 +78,7 @@ export class HrViewerComponent implements OnInit {
   redraw() {
     if (!this.zones)
       return;
-
+    // update data
     const data = Object.keys(this.zones)
       .map(x => parseInt(x))
       .map(z => ({
@@ -72,6 +92,13 @@ export class HrViewerComponent implements OnInit {
       name:'HR Zones',
       data
     }
+
+
+    // update configuration
+    const pieOptions = this.options.plotOptions!.pie!;
+    pieOptions.innerSize = this.mode === 'live' ? '85%' : '60%';
+    (pieOptions.dataLabels as Highcharts.SeriesPieDataLabelsOptionsObject)!.enabled = this.mode == 'review';
+
 
     // trigger the update
     this.updateFlag = true;

@@ -5,6 +5,7 @@ import { SessionsListPageComponent } from './pages/sessions-list-page/sessions-l
 import { SessionEntryComponent } from './comps/session-entry/session-entry.component';
 import { SharedModule } from '../shared/shared.module';
 import { SessionDetailsComponent } from './comps/session-details/session-details.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 
 
@@ -17,6 +18,7 @@ import { SessionDetailsComponent } from './comps/session-details/session-details
   imports: [
     CommonModule,
     SharedModule,
+    HighchartsChartModule,
     HistoryRoutingModule
   ]
 })
