@@ -12,15 +12,16 @@ import { ArchiveSelectors } from 'src/app/state/app.selectors';
   templateUrl: './sessions-list-page.component.html',
 })
 export class SessionsListPageComponent implements OnInit {
-  currentWeek = moment().week();
+  currentWeek = moment().isoWeek();
 
   sessions$ = this.store.select(ArchiveSelectors.getAll).pipe(
     map(rows => sortBy(rows, r => r.start, 'desc'))
   );
 
   weekGroups$ = this.sessions$.pipe(
-    map(rows => groupBy(rows, item => moment(item.start).week())),
-    map(iterateObj)
+    map(rows => groupBy(rows, item => moment(item.start).isoWeek())),
+    map(iterateObj),
+    map(g => sortBy(g, g => g.key, 'desc'))
   );
 
   constructor(
@@ -38,8 +39,8 @@ export class SessionsListPageComponent implements OnInit {
       return 'Last week';
     else {
       const date = moment(week, 'W');
-      const start = date.startOf('week').format('L');
-      const end = date.endOf('week').format('L');
+      const start = date.startOf('isoWeek').format('ddd ll');
+      const end = date.endOf('isoWeek').format('ddd ll');
       return `${start} - ${end}`;
     }
 

@@ -1,12 +1,12 @@
 
-<div class="w-48 h-48 border-1 border-primary rounded-full p-1 flex items-center justify-center relative">
+<div class="rounded-full p-1 flex items-center justify-center relative" [style.width]="size" [style.height]="size" [class.live]="mode === 'live'">
     <highcharts-chart
-        class="block w-full h-full absolute left-0 top-0"
+        class="block w-full h-full absolute left-0 top-0 flex-grow"
         [Highcharts]="Highcharts"
         [options]="options"
         [(update)]="updateFlag"
     ></highcharts-chart>
-    <div *ngIf="value" class="text-center">
+    <div *ngIf="value && mode == 'live'" class="text-center">
       
         <fa-icon icon="heart-pulse" class="block" [style.color]="chooseColor(value.zone)"></fa-icon>
         
