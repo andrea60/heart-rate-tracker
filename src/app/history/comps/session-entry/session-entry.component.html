@@ -1,10 +1,13 @@
 <hrt-card>
     <div class="flex items-center" (click)="openDetails()">
         <div class="flex-grow-0 mx-2">
-            <span class="material-icons text-3xl">{{sessionType$ | async}}</span>
+            <span class="material-icons text-3xl">{{(sessionType$ | async)?.icon}}</span>
         </div>
         <div class="flex-1">
-            <p class="mb-0"><span class="text-primary font-bold">Running</span> for {{duration$ | async}} mins </p>
+            <p class="mb-0">
+                <span class="text-primary font-bold">
+                {{(sessionType$ | async)?.name}}</span> for {{duration$ | async}} mins 
+            </p>
             <div class="text-xs">{{session.start | date }}</div>
         </div>
     </div>

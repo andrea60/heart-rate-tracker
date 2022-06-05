@@ -14,7 +14,22 @@ export class SessionDetailsComponent extends ModalContent implements OnInit, OnC
   private readonly inputs = new ObservableInputs();
   @Input()
   id!:string;
-  id$ = this.inputs.observe(() => this.id);
+  protected id$ = this.inputs.observe(() => this.id);
+
+  protected session$ = this.id$.pipe(
+    switchMap(() => this.store.select(ArchiveSelectors.getSession(this.id))),
+    map(s => {
+      if (!s)
+        throw 'Session not found';
+      return s!;
+    })
+  );
+
+  protected userParams$ = this.store.select(UserParamsSelectors.getAll);
+  protected zones$ = this.session$.pipe(map(s => s.zones));
+  protected type$ = this.session$.pipe(
+    switchMap(session => this.store.select(ActivitySessionSelectors.getType(session.activityTypeId)))
+  );
 
   constructor(
     modal:ModalService,
@@ -22,13 +37,7 @@ export class SessionDetailsComponent extends ModalContent implements OnInit, OnC
   ) {
     super(modal);
   }
-  session$ = this.id$.pipe(
-    switchMap(() => this.store.select(ArchiveSelectors.getSession(this.id))),
-    tap(s => console.log('Got session ', s))
-  );
-
-  userParams$ = this.store.select(UserParamsSelectors.getAll);
-  zones$ = this.session$.pipe(map(s => s!.zones));
+  
 
 
   ngOnChanges(changes: SimpleChanges): void {

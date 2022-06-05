@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
+import { combineLatest, map, switchMap } from 'rxjs';
 import { ObservableInputs } from 'src/app/lib/observable-inputs';
 import getSessionDuration from 'src/app/logic/session/get-session-duration';
 import { ModalService } from 'src/app/modals/modal.service';
@@ -20,11 +20,9 @@ export class SessionEntryComponent implements OnInit, OnChanges {
   session!: ActivitySession;
   session$ = this.inputs.observe(() => this.session);
 
-  sessionType$ =combineLatest([this.store.select(ActivitySessionSelectors.getTypes), this.session$]).pipe(
-    map(([types, session]) => types.find(t => t.id === session.activityTypeId)?.icon),
-    map(icon => icon || this.DEFAULT_ICON)
-  );
-
+  sessionType$ = this.session$.pipe(
+    switchMap(({activityTypeId}) => this.store.select(ActivitySessionSelectors.getType(activityTypeId)))
+  )
   duration$ = this.session$.pipe(
     map(s => getSessionDuration(s)),
     map(duration => this.durationPipe.transform(duration, 'tot_mins'))

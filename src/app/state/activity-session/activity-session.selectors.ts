@@ -10,3 +10,4 @@ export const getStatus = createSelector(_, state => state.status);
 export const getCurrentHR = createSelector(_, state => state.currentSession?.hr || null);
 export const getZones = createSelector(_, state => state.currentSession?.zones || null);
 export const getTypes = createSelector(_, state => state.activityTypes);
+export const getType = (id:string) => createSelector(_, state => state.activityTypes.find(t => t.id === id));
