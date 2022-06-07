@@ -2,10 +2,11 @@
     <div class="text-center mb-4">
         <h5 class="text-lg flex items-center justify-center" *ngIf="type$ | async as type">
             <span class="material-icons mr-2">{{type.icon}}</span>
-            <span>{{type.name}} for {{session | duration:'tot_mins'}} minutes</span>
+            <span class="font-bold">{{type.name}} for {{session | duration:'tot_mins'}} minutes</span>
         </h5>
         <p class=""><fa-icon icon="calendar-alt"></fa-icon> {{session.start | date}}</p>
     </div>
+    <hr class="mb-4">
     <div class="flex justify-between">
         <hrt-hr-viewer title="Heart Rate Zones" [zones]="zones$ | async" mode="review" size="14rem"></hrt-hr-viewer>
         <div class="flex flex-col h-56 justify-between">

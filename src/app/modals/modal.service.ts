@@ -3,6 +3,7 @@ import { filter, map, merge, Observable, Subject, take } from 'rxjs';
 import { getUUID } from 'src/app/lib/get-uuid';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ModalContent } from './modal-content';
+import { DialogOption, OptionsDialogComponent } from './options-dialog/options-dialog.component';
 
 
 type GenericOf<T> = T extends ModalContent<infer X> ? X : never;
@@ -61,6 +62,12 @@ export class ModalService {
   /** Opens a generic confirmation (yes\no) dialog with a custom text */
   openConfirmDialog(text:string){
     return this.openModal(ConfirmDialogComponent, { inputs: { text } });
+  }
+  /** Opens a dialog with several options */
+  openOptionsDialog(options:DialogOption[], allowCancel:boolean=false){
+    return this.openModal(OptionsDialogComponent, {
+      inputs: { extOptions: options, allowCancel }
+    });
   }
   closeModal(){
     this.out$.next({ action:'close' });

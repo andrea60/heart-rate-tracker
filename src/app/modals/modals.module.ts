@@ -6,6 +6,7 @@ import { ModalButtonComponent } from './modal-button/modal-button.component';
 import { ModalFooterComponent } from './modal-footer/modal-footer.component';
 import { ModalTargetDirective } from './modal-target.directive';
 import { ModalHeaderComponent } from './modal-header/modal-header.component';
+import { OptionsDialogComponent } from './options-dialog/options-dialog.component';
 
 
 
@@ -17,6 +18,7 @@ import { ModalHeaderComponent } from './modal-header/modal-header.component';
     ModalFooterComponent,
     ConfirmDialogComponent,
     ModalHeaderComponent,
+    OptionsDialogComponent,
   ],
   imports: [
     CommonModule,

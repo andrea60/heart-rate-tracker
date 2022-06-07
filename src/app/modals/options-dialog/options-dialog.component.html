@@ -1,0 +1,3 @@
+<modal-button *ngFor="let opt of options" [disabled]="opt.disabled || false" (click)="onClick(opt)">
+    {{opt.text}}
+</modal-button>

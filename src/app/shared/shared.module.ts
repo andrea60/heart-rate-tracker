@@ -11,6 +11,7 @@ import { CardComponent } from './comps/card/card.component';
 import { SimpleValueCardComponent } from './comps/simple-value-card/simple-value-card.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
+import { LongPressDirective } from './directives/long-press.directive';
 
 
 
@@ -23,7 +24,8 @@ import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
     CardComponent,
     SimpleValueCardComponent,
     DurationPipe,
-    HrViewerComponent
+    HrViewerComponent,
+    LongPressDirective
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { HrViewerComponent } from './comps/hr-viewer/hr-viewer.component';
     HrChartComponent,
     CardComponent,
     SimpleValueCardComponent,
-    HrViewerComponent
+    HrViewerComponent,
+    LongPressDirective
   ]
 })
 export class SharedModule { }

@@ -44,4 +44,7 @@ export class SessionEntryComponent implements OnInit, OnChanges {
   openDetails(){
     this.modal.openModal(SessionDetailsComponent, { type:'card', title: 'Session details', inputs: { id: this.session.id }});
   }
+  openMenu(){
+    console.log('Long pressed, open menu')
+  }
 }
