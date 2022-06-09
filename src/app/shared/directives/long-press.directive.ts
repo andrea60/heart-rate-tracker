@@ -1,13 +1,12 @@
 import { animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, keyframes, style } from '@angular/animations';
-import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
-import { fromEvent, interval, map, share, skipWhile, switchMap, take, takeUntil, takeWhile, tap } from 'rxjs';
+import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { delay, fromEvent, interval, map, share, skipUntil, skipWhile, switchMap, take, takeUntil, takeWhile, tap } from 'rxjs';
 
 @Directive({
   selector: '[longPress]'
 })
 export class LongPressDirective {
   private readonly INT_PRECISION = 100;
-  private startTime?:Date;
 
   private squeezeIn:AnimationMetadata[] = [
     style({ transform: '*'}),
@@ -21,7 +20,12 @@ export class LongPressDirective {
 
   @Output()
   onLongPress = new EventEmitter();
-  pressTime:number = 1250;
+  @Output()
+  click = new EventEmitter<Event>()
+  @Input()
+  pressThreshold:number = 1250;
+  @Input()
+  clickThreshold:number = 400;
   constructor(
     private elementRef:ElementRef,
     private animBuilder:AnimationBuilder
@@ -32,34 +36,32 @@ export class LongPressDirective {
 
   init(){
     const { nativeElement } = this.elementRef;
-    const start$ = fromEvent<TouchEvent>(nativeElement, 'touchstart');
-    const end$ = fromEvent<TouchEvent>(nativeElement, 'touchend').pipe(
-      share()
-    )
+    const start$ = fromEvent<TouchEvent>(nativeElement, 'touchstart').pipe(share());
+    const end$ = fromEvent<TouchEvent>(nativeElement, 'touchend').pipe(share());
 
-    end$.subscribe(() => this.animPlayer.reset())
+    start$.pipe(delay(this.clickThreshold)).subscribe(() => this.animPlayer.play());
+
+    end$.subscribe(() => this.animPlayer.reset());
+    
     start$.pipe(
       tap(e => e.preventDefault()),
-      tap(() => {
-        this.animPlayer.play();
-        this.startTime = new Date();
-      }),
       switchMap(() => 
         // start a "timer"
         interval(this.INT_PRECISION).pipe(
           // convert back to total time (from start)
           map(n => (n+1) * this.INT_PRECISION),
           // block if it's released
-          takeUntil(end$),
+          skipUntil(end$),
           // emit only if press time has been reached
-          skipWhile(time => time < this.pressTime),
+          //skipWhile(time => time < this.pressTime),
           take(1)
         )
       ),
-    ).subscribe(time => {
-      const elapsed = (new Date().valueOf() - this.startTime!.valueOf());
-      console.log('Elapsed ', elapsed);
-      this.onLongPress.emit();
+    ).subscribe((time) => {
+      if (time >= this.pressThreshold)
+        this.onLongPress.emit();
+      else if (time <= this.clickThreshold)
+        this.click.emit();
     })
 
   }
