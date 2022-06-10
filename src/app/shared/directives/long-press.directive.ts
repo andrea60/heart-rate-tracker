@@ -1,6 +1,7 @@
 import { animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, keyframes, style } from '@angular/animations';
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { delay, fromEvent, interval, map, share, skipUntil, skipWhile, switchMap, take, takeUntil, takeWhile, tap } from 'rxjs';
+import { delay, fromEvent, interval, map, merge, Observable, share, skipUntil, skipWhile, Subject, switchMap, take, takeUntil, takeWhile, tap, timer } from 'rxjs';
+import { log } from 'src/app/lib/log';
 
 @Directive({
   selector: '[longPress]'
@@ -26,6 +27,10 @@ export class LongPressDirective {
   pressThreshold:number = 1250;
   @Input()
   clickThreshold:number = 400;
+
+  private start$!:Observable<TouchEvent>;
+  private end$!: Observable<TouchEvent>;
+  private complete$ = new Subject();
   constructor(
     private elementRef:ElementRef,
     private animBuilder:AnimationBuilder
@@ -36,24 +41,30 @@ export class LongPressDirective {
 
   init(){
     const { nativeElement } = this.elementRef;
-    const start$ = fromEvent<TouchEvent>(nativeElement, 'touchstart').pipe(share());
-    const end$ = fromEvent<TouchEvent>(nativeElement, 'touchend').pipe(share());
+    this.start$ = fromEvent<TouchEvent>(nativeElement, 'touchstart').pipe(share());
+    this.end$ = fromEvent<TouchEvent>(nativeElement, 'touchend').pipe(share());
 
-    start$.pipe(delay(this.clickThreshold)).subscribe(() => this.animPlayer.play());
+    this.start$.pipe(
+      switchMap(() => 
+        timer(this.clickThreshold).pipe(takeUntil(this.end$))
+      )).subscribe(() => this.animPlayer.play());
 
-    end$.subscribe(() => this.animPlayer.reset());
+    this.end$.subscribe(() => this.animPlayer.reset());
     
-    start$.pipe(
+    this.start$.pipe(
       tap(e => e.preventDefault()),
       switchMap(() => 
         // start a "timer"
         interval(this.INT_PRECISION).pipe(
           // convert back to total time (from start)
           map(n => (n+1) * this.INT_PRECISION),
+          tap(time => {
+            if (time >= this.pressThreshold) 
+              this.complete$.next(null);
+          }),
           // block if it's released
-          skipUntil(end$),
+          skipUntil(merge(this.end$, this.complete$)),
           // emit only if press time has been reached
-          //skipWhile(time => time < this.pressTime),
           take(1)
         )
       ),
@@ -62,6 +73,7 @@ export class LongPressDirective {
         this.onLongPress.emit();
       else if (time <= this.clickThreshold)
         this.click.emit();
+      this.animPlayer.reset();
     })
 
   }
