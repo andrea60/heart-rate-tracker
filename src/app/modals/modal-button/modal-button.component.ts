@@ -5,6 +5,13 @@ import { ModalService } from '../modal.service';
 @Component({
   selector: 'modal-button',
   templateUrl: './modal-button.component.html',
+  styles: [
+    `
+    :host {
+      display:block;
+    }
+    `
+  ]
 })
 export class ModalButtonComponent implements OnInit {
 
@@ -14,8 +21,8 @@ export class ModalButtonComponent implements OnInit {
   disabled:boolean = false;
   @Input()
   role:'dismiss' | 'custom' = 'custom';
-  @Input()
-  class:string = '';
+  // @Input()
+  // class:string = '';
 
   constructor(
     private modal:ModalService

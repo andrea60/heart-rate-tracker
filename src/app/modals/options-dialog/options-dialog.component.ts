@@ -28,6 +28,10 @@ export class OptionsDialogComponent extends ModalContent<DialogOption> {
     else
       this.closeModal(option);
   }
+  protected getColorClass(option:DialogOption){
+    const type = option.type || 'default';
+    return type == 'danger' ? 'text-red-500' : '';
+  }
   override onModalInit(): void {
       this.options = this.extOptions;
       if (this.allowCancel) {
@@ -48,4 +52,5 @@ export interface DialogOption {
   key:string;
   disabled?:boolean;
   icon?:string;  
+  type?: 'default' | 'danger';
 }

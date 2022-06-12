@@ -4,6 +4,7 @@ import { combineLatest, map, switchMap } from 'rxjs';
 import { ObservableInputs } from 'src/app/lib/observable-inputs';
 import getSessionDuration from 'src/app/logic/session/get-session-duration';
 import { ModalService } from 'src/app/modals/modal.service';
+import { DialogOption } from 'src/app/modals/options-dialog/options-dialog.component';
 import { ActivitySession } from 'src/app/models/activity-session.model';
 import { DurationPipe } from 'src/app/shared/pipes/duration.pipe';
 import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
@@ -45,6 +46,12 @@ export class SessionEntryComponent implements OnInit, OnChanges {
     this.modal.openModal(SessionDetailsComponent, { type:'card', title: 'Session details', inputs: { id: this.session.id }});
   }
   openMenu(){
-    console.log('Long pressed, open menu')
+    const options:DialogOption[] = [
+      { key:'delete', text:'Delete', icon:'trash', type:'danger'}
+    ];
+
+    this.modal.openOptionsDialog(options, true).subscribe(result => {
+
+    })
   }
 }
