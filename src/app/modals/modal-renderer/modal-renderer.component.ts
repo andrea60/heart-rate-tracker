@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewChecked, AfterViewInit, Component, Input, OnInit, QueryList, Type, ViewChild, ViewChildren } from '@angular/core';
 import { filter, switchMap, take, tap } from 'rxjs';
+import { log } from 'src/app/lib/log';
 import { switchAdd } from 'src/app/lib/switch-add';
 import { ModalContent } from '../modal-content';
 import { ModalRenderConf } from '../modal-render-conf.model';
@@ -54,14 +55,15 @@ export class ModalRendererComponent implements OnInit, AfterViewInit {
     // OPEN
     this.modalSrv.out$.pipe(
       filter(({ action }) => action === 'open'),
-      tap(() => this.open = true),
+      tap(({conf}) => {
+        this.conf = conf;
+        this.open = true;
+      }),
       switchAdd(() => this.renderTarget.changes.pipe(take(1)))
     ).subscribe((([descr]) => {
       // all preliminary operations have completed, now component can render
       setTimeout(() => {
-        this.conf = descr.conf;
         this.renderComponent(descr.componentClass!, descr.inputs);
-        console.log('Opening modal with conf ', this.conf);
       }, 1);
     }));
 

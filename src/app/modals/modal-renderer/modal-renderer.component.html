@@ -1,10 +1,10 @@
 <div>
     <!-- BACKDROP -->
-    <div *ngIf="open" class="fixed left-0 top-0 w-full h-full bg-black bg-opacity-50" @fade></div>
+    <div *ngIf="open" class="fixed left-0 top-0 w-full h-full bg-black bg-opacity-20" @fade></div>
 
     <!-- STRUCTURE -->
     <div class="modal-container modal-{{conf.type}}" *ngIf="open && conf">
-        <div class="modal-content bg-back shadow-lg rounded-lg " @slide>
+        <div class="modal-content bg-opacity-30 backdrop-blur-sm bg-back shadow-lg rounded-lg " @slide>
             <hrt-modal-header *ngIf="conf.type === 'card'" [title]="conf.title"></hrt-modal-header>
             <div class="p-2">
                 <ng-template hrtModalTarget></ng-template>
