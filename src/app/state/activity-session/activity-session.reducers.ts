@@ -55,7 +55,7 @@ export default createReducer(
         // check there is an open session now
         if (!state.currentSession)
             return state;
-        return { ...state, currentSession: { ...state.currentSession, end: new Date() }};
+        return { ...state, status:'idle', currentSession: { ...state.currentSession, end: new Date() }};
     }),
     on(addHRData, (state, { value, time, userParams }) => produce(state, draft => {
         // check there is an open session now

@@ -54,12 +54,14 @@ export class ModalRendererComponent implements OnInit, AfterViewInit {
     // OPEN
     this.modalSrv.out$.pipe(
       filter(({ action }) => action === 'open'),
-      tap(() => this.open = true),
+      tap(({conf}) => {
+        this.conf = conf;
+        this.open = true;
+      }),
       switchAdd(() => this.renderTarget.changes.pipe(take(1)))
     ).subscribe((([descr]) => {
       // all preliminary operations have completed, now component can render
       setTimeout(() => {
-        this.conf = descr.conf;
         this.renderComponent(descr.componentClass!, descr.inputs);
         console.log('Opening modal with conf ', this.conf);
       }, 1);

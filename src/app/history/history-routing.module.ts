@@ -4,7 +4,10 @@ import { InSessionService as InSession } from "../shared/guards/in-session.servi
 import { SessionsListPageComponent } from "./pages/sessions-list-page/sessions-list-page.component";
 
 const routes:Route[] = [
-    { path:'', canActivate:[], component:SessionsListPageComponent },
+    { path:'', canActivate:[], children:[
+        { path:':id', component:SessionsListPageComponent},
+        { path:'', component:SessionsListPageComponent}
+    ] },
 ]
 @NgModule({
     imports: [RouterModule.forChild(routes)],

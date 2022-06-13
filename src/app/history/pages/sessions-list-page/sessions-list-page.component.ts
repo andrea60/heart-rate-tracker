@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import moment from 'moment';
 import { map } from 'rxjs';
 import { groupBy } from 'src/app/lib/array/group-by';
 import { sortBy } from 'src/app/lib/array/sort';
 import { iterateObj } from 'src/app/lib/iterate-obj';
+import { ModalService } from 'src/app/modals/modal.service';
 import { ArchiveSelectors } from 'src/app/state/app.selectors';
+import { SessionDetailsComponent } from '../../comps/session-details/session-details.component';
 
 @Component({
   selector: 'hrt-sessions-list-page',
@@ -25,10 +28,16 @@ export class SessionsListPageComponent implements OnInit {
   );
 
   constructor(
-    private store:Store
+    private store:Store,
+    private activeRoute:ActivatedRoute,
+    private modal:ModalService
   ) { }
 
   ngOnInit(): void {
+    this.activeRoute.paramMap.subscribe(params => {
+      if (params.has('id'))
+        this.modal.openModal(SessionDetailsComponent, { type:'card', title: 'Session details', inputs: { id: params.get('id')! }});
+    })
   }
 
 

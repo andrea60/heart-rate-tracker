@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, switchMap } from 'rxjs';
 import { ObservableInputs } from 'src/app/lib/observable-inputs';
@@ -8,6 +8,7 @@ import { DialogOption } from 'src/app/modals/options-dialog/options-dialog.compo
 import { ActivitySession } from 'src/app/models/activity-session.model';
 import { DurationPipe } from 'src/app/shared/pipes/duration.pipe';
 import { ActivitySessionSelectors } from 'src/app/state/app.selectors';
+import { deleteSession } from 'src/app/state/archive/archive.actions';
 import { SessionDetailsComponent } from '../session-details/session-details.component';
 
 @Component({
@@ -47,11 +48,16 @@ export class SessionEntryComponent implements OnInit, OnChanges {
   }
   openMenu(){
     const options:DialogOption[] = [
-      { key:'delete', text:'Delete', icon:'trash', type:'danger'}
+      { key:'delete', text:'Delete', icon:'delete_forever', type:'danger'}
     ];
 
-    this.modal.openOptionsDialog(options, true).subscribe(result => {
-
+    this.modal.openOptionsDialog(options, true).subscribe(({reason, data}) => {
+      if (reason === 'complete' && data.key === 'delete')
+        this.deleteEntry();
     })
+  }
+
+  deleteEntry(){
+    this.store.dispatch(deleteSession({ uuid: this.session.id }))
   }
 }

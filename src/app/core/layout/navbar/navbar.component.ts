@@ -1,8 +1,10 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Store } from '@ngrx/store';
-import { map, timer } from 'rxjs';
+import { filter, map, switchMap, timer, withLatestFrom } from 'rxjs';
+import { joinState } from 'src/app/lib/join-state';
 import { ModalService } from 'src/app/modals/modal.service';
 import { SessionStatus } from 'src/app/state/activity-session/activity-session.reducers';
 import { ActivitySessionActions } from 'src/app/state/app.actions';
@@ -39,7 +41,7 @@ export class NavbarComponent implements OnInit {
     { path: '/history', icon: 'clock-rotate-left', session:['idle'] },
 
     { icon:'pause', click:() => this.pause(), session:['running'] },
-    { icon: 'stop', click:() => this.stop(), color:'rgb(239,68,68)', session:['running']},
+    { icon:'stop', click:() => this.stop(), color:'rgb(239,68,68)', session:['running']},
     { icon:'play', click:() => this.resume(), session:['paused'] },
 
 
@@ -63,7 +65,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private store: Store,
-    private modal:ModalService
+    private modal:ModalService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -90,10 +93,14 @@ export class NavbarComponent implements OnInit {
     this.store.dispatch(ActivitySessionActions.resumeSession())
   }
   stop(){
-    this.modal.openConfirmDialog('Are you sure you want to stop?').subscribe(answer => {
-      if (answer.data === true)
+    this.modal.openConfirmDialog('Are you sure you want to stop?').pipe(
+      joinState(() => this.store.select(ActivitySessionSelectors.getCurrentSession))
+    ).subscribe(([modal, session]) => {
+      if (modal.data === true){
         this.store.dispatch(ActivitySessionActions.closeSession());
-    });
+        this.router.navigate(['/history', session!.id])
+      }
+    }) 
   }
 }
 
