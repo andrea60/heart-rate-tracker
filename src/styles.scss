@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
 
@@ -123,3 +121,16 @@ hr {
     opacity: 1;
   }
 }
+
+
+.material-icons { 
+    display: inline-flex; 
+    vertical-align: text-bottom; 
+    font-size:120%; 
+}
+
+
+/* Lastly, import Tailwind CSS rules so they have an higher priority*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

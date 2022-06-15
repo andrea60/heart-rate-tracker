@@ -1,5 +1,6 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, interval, map, startWith, switchMap, timer } from 'rxjs';
 import { slideIn } from 'src/app/animations/slide-in.anim';
@@ -36,13 +37,14 @@ export class LiveViewComponent implements OnInit {
   userParams$ = this.store.select(UserParamsSelectors.getAll);
   hrMax$ = this.userParams$.pipe(map(p => p.hrMax!));
 
-  constructor(public store:Store<ActivitySessionState>) { }
+  constructor(
+    public store:Store<ActivitySessionState>,
+    public router:Router
+    ) { }
 
   ngOnInit(): void {
   }
 
-  stop(){
-    this.store.dispatch(ActivitySessionActions.closeSession());
-  }
+ 
 
 }

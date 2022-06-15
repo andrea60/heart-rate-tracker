@@ -20,7 +20,7 @@ export class LongPressDirective {
   protected animPlayer:AnimationPlayer;
 
   @Output()
-  onLongPress = new EventEmitter();
+  onLongPress = new EventEmitter<ElementRef>();
   @Output()
   click = new EventEmitter<Event>()
   @Input()
@@ -70,7 +70,7 @@ export class LongPressDirective {
       ),
     ).subscribe((time) => {
       if (time >= this.pressThreshold)
-        this.onLongPress.emit();
+        this.onLongPress.emit(this.elementRef);
       else if (time <= this.clickThreshold)
         this.click.emit();
       this.animPlayer.reset();

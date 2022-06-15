@@ -37,7 +37,8 @@ export class OptionsDialogComponent extends ModalContent<DialogOption> {
       if (this.allowCancel) {
         const cancelOption = {
           key:'__CANCEL',
-          text:'Cancel'
+          text:'Cancel',
+          icon:'close'
         }
         this.options = [...this.options, cancelOption];
       }

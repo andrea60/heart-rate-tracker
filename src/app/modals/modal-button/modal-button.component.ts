@@ -8,7 +8,7 @@ import { ModalService } from '../modal.service';
   styles: [
     `
     :host {
-      display:block;
+      display:flex;
     }
     `
   ]

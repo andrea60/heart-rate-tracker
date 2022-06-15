@@ -3,7 +3,11 @@
     *ngFor="let opt of options" 
     [disabled]="opt.disabled || false" 
     (click)="onClick(opt)" 
-    class="font-bold w-44 py-1 border-b-1 border-main-500 text-center last:border-b-0 {{getColorClass(opt)}}">
+    class="font-bold w-44 py-1 border-b-1 border-main-500 text-center last:border-b-0 {{getColorClass(opt)}} flex justify-around"
+>
+    <span>{{opt.text}}</span>   
 
-    {{opt.text}}
+    <span class="material-icons" *ngIf="opt.icon">
+        {{opt.icon}}
+    </span>
 </modal-button>

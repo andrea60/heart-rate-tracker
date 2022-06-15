@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
+import produce from "immer";
 import { ActivitySession } from "src/app/models/activity-session.model";
-import { saveSession } from "./archive.actions";
+import { deleteSession, saveSession } from "./archive.actions";
 
 export interface ArchiveState {
     sessions: { [key:string]: ActivitySession };
@@ -18,5 +19,9 @@ export default createReducer(
             ...state.sessions,
             [session.id]: session
         }
+    })),
+    on(deleteSession, (state, {uuid}) => produce(state, (draft) => {
+        if (draft.sessions[uuid])
+            delete draft.sessions[uuid];
     }))
 )
