@@ -1,3 +1,5 @@
-<div class="bg-main p-2  rounded-lg shadow-lg" longPress (onLongPress)="onLongPress.emit()" (click)="click.emit()">
+<div class="bg-main p-2  rounded-lg shadow-lg {{class}}"
+    longPress (onLongPress)="onLongPress.emit()" 
+    (click)="click.emit()">
     <ng-content></ng-content>
 </div>

@@ -1,10 +1,10 @@
-<hrt-card (click)="openDetails()" (onLongPress)="openMenu()">
+<hrt-card (click)="openDetails()" (onLongPress)="openMenu()" customClass="py-1 ml-6 px-0 pr-3">
     <div class="flex items-center" >
-        <div class="flex-grow-0 mx-2">
-            <span class="material-icons text-3xl">{{(sessionType$ | async)?.icon}}</span>
+        <div class="bg-primary rounded-full shadow-md w-12 h-12 flex items-center justify-center relative -left-5">
+            <hrt-icon class="text-2xl" [icon]="(sessionType$ | async)?.icon"></hrt-icon>
         </div>
         <div class="flex-1">
-            <p class="mb-0">
+            <p class="mb-1 pb-1 border-b-1 border-main-100">
                 <span class="text-primary font-bold">
                 {{(sessionType$ | async)?.name}}</span> for {{duration$ | async}} mins 
             </p>

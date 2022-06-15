@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'hrt-card',
@@ -10,6 +10,8 @@ export class CardComponent implements OnInit {
 
   @Output()
   click = new EventEmitter();
+  @Input('customClass')
+  class:string = '';
 
   constructor() { }
 

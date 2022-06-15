@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, switchMap } from 'rxjs';
 import { ObservableInputs } from 'src/app/lib/observable-inputs';

@@ -2,31 +2,31 @@
     {
         "id":"ac563456-b6b5-4b6f-9be8-f17a97cb0e18",
         "name":"Outdoor Running",
-        "icon":"directions_run"
+        "icon":"person-running"
     },
     {
         "id":"45d29080-b561-40ed-88ad-9a2984aa15e0",
         "name":"Treadmill",
-        "icon":"directions_run"
+        "icon":"person-running"
     }, 
     {
         "id":"b5b8431a-249e-4cf1-aa7a-9016636c80b5",
         "name":"Crossfit",
-        "icon":"fitness_center"
+        "icon":"fire-flame-simple"
     },
     {
         "id":"533f0056-164f-4cb1-9411-decf03577034",
         "name":"Indoor Cycling",
-        "icon":"directions_bike"
+        "icon":"person-biking"
     },
     {
         "id":"e016cb10-5292-4145-87a3-88bf87d46f94",
         "name":"Outdoor Cycling",
-        "icon":"directions_bike"
+        "icon":"person-biking"
     },
     {
         "name":"Swimming",
         "id":"1bd8a1bc-472e-430a-8ce4-13c6d93f4efc",
-        "icon":"pool"
+        "icon":"person-swimming"
     }
 ]
